@@ -35,7 +35,7 @@
             --primary: #76d68e;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
 
         body { 
             font-family: var(--font-ui); background: var(--bg-body); color: var(--text-main); 
@@ -75,142 +75,218 @@
 
         .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
         .header { height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
+        .page-title { margin: 0; font-family: var(--font-head); font-size: 1.6rem; }
         .content { flex: 1; padding: 0 40px 40px 40px; overflow-y: auto; }
 
-        /* --- UI --- */
+        /* --- UI ELEMENTS --- */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
         .card { background: var(--bg-card); border-radius: var(--radius); padding: 20px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
-        input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-input); color: var(--text-main); margin-bottom: 10px; font-size: 1rem; }
-        button { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; width: 100%; }
+        
+        input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-input); color: var(--text-main); margin-bottom: 12px; font-size: 1rem; }
+        button { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; width: 100%; font-size: 1rem; transition: 0.2s; }
+        button:active { transform: scale(0.98); }
+        
         .hidden { display: none !important; }
         .icon { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; }
+        
+        textarea { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-input); color: var(--text-main); font-family: inherit; font-size: 1rem; resize: none; }
     </style>
 </head>
 <body>
 
     <div id="login-overlay">
         <div class="login-card">
-            <h2 id="login-title" style="color:var(--primary); margin-top:0;">TeacherPro</h2>
-            <p id="login-desc" style="color:var(--text-muted); font-size: 0.9rem;">Bitte anmelden</p>
+            <h2 id="login-title" style="color:var(--primary); margin:0 0 10px 0; font-family: var(--font-head);">TeacherPro</h2>
+            <p id="login-desc" style="color:var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Sicherer Zugriff</p>
             
-            <input type="text" id="user-name" class="reg-only" placeholder="Dein Name">
-            <input type="password" id="user-pass" placeholder="Passwort">
+            <div id="reg-fields">
+                <input type="text" id="reg-name" placeholder="Dein Name">
+            </div>
+            <input type="password" id="auth-pass" placeholder="Passwort">
             
             <button onclick="handleAuth()" id="auth-btn">Einloggen</button>
-            <p id="error-msg" style="color:var(--danger); font-size:0.8rem; margin-top:10px;" class="hidden">Falsches Passwort!</p>
+            <p id="error-msg" style="color:var(--danger); font-size:0.8rem; margin-top:12px;" class="hidden">Falsches Passwort!</p>
         </div>
     </div>
 
     <nav class="sidebar">
         <div style="font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-bottom: 30px; padding-left: 10px;" class="logo">TeacherPro</div>
+        
         <div class="nav-item active" onclick="nav('dashboard')">
             <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
             <span>Übersicht</span>
         </div>
+        
         <div class="nav-item" onclick="nav('classes')">
             <svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
             <span>Klassen</span>
         </div>
+
         <div style="flex:1"></div>
+
+        <div class="nav-item" onclick="toggleTheme()">
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line></svg>
+            <span>Modus</span>
+        </div>
+        
         <div class="nav-item" onclick="logout()" style="color:var(--danger)">
+            <svg class="icon" viewBox="0 0 24 24" style="stroke: var(--danger)"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
             <span>Abmelden</span>
         </div>
     </nav>
 
     <main class="main">
         <header class="header">
-            <h1 id="page-title" style="margin:0; font-family: var(--font-head);">Übersicht</h1>
-            <div id="user-badge" style="width:40px; height:40px; background:var(--primary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold;">?</div>
+            <h1 id="page-title" class="page-title">Übersicht</h1>
+            <div id="user-badge" style="width:40px; height:40px; background:var(--primary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; box-shadow: var(--shadow);">?</div>
         </header>
 
         <div class="content">
             <div id="dashboard" class="page">
                 <div class="grid">
-                    <div class="card" style="grid-column: 1 / -1;">
-                        <h2 style="margin:0">Hallo, <span id="welcome-name">...</span>! 🍎</h2>
-                        <p style="color:var(--text-muted)">Deine Daten sind sicher verschlüsselt.</p>
+                    <div class="card" style="grid-column: 1 / -1; background: var(--primary-light); border: none;">
+                        <h2 style="margin:0; color: var(--primary);">Hallo, <span id="welcome-name">Lehrkraft</span>! 🌿</h2>
+                        <p style="margin:5px 0 0 0; opacity: 0.8;">Alle Daten sind lokal auf diesem Gerät gesichert.</p>
                     </div>
+                    
                     <div class="card">
                         <h3>Schnellnotiz</h3>
-                        <textarea id="quick-note" style="width:100%; height:150px; border:none; background:var(--bg-input); padding:10px; border-radius:10px;" oninput="saveAll()" placeholder="Tippe hier..."></textarea>
+                        <textarea id="quick-note" style="height:150px;" oninput="saveToDB()" placeholder="Was gibt es heute zu tun?"></textarea>
+                    </div>
+
+                    <div class="card">
+                        <h3>Info</h3>
+                        <p style="font-size: 0.9rem; line-height: 1.5; color: var(--text-muted);">
+                            Dies ist TeacherPro v4.1. Du kannst Klassen anlegen und Notizen verwalten. Deine Daten bleiben in deinem Browser-Speicher.
+                        </p>
                     </div>
                 </div>
             </div>
 
             <div id="classes" class="page hidden">
                 <div class="card">
-                    <h3>Klassenliste</h3>
-                    <p>Hier kannst du bald deine Klassen verwalten.</p>
-                    <button style="width:auto">+ Klasse hinzufügen</button>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                        <h3 style="margin:0">Meine Klassen</h3>
+                        <button onclick="addClass()" style="width:auto; padding:8px 15px;">+ Neu</button>
+                    </div>
+                    <div id="class-list-container">
+                        </div>
                 </div>
             </div>
         </div>
     </main>
 
     <script>
-        let db = { name: '', password: '', notes: '', classes: [], todos: [] };
+        let db = { name: '', password: '', notes: '', classes: [] };
 
-        // INITIALISIERUNG
+        // BEIM LADEN PRÜFEN
         window.onload = () => {
-            const saved = localStorage.getItem('tp_secure_db');
+            const saved = localStorage.getItem('tp_secure_v41');
             if (!saved) {
-                document.getElementById('login-title').innerText = "Registrierung";
-                document.getElementById('login-desc').innerText = "Lege dein Konto fest";
+                // Erster Start -> Registrierungs-Modus
+                document.getElementById('login-title').innerText = "Ersteinrichtung";
+                document.getElementById('login-desc').innerText = "Wähle einen Namen und Passwort";
                 document.getElementById('auth-btn').innerText = "Konto erstellen";
             } else {
-                document.querySelectorAll('.reg-only').forEach(el => el.classList.add('hidden'));
+                // Normaler Start -> Login-Modus
+                document.getElementById('reg-fields').classList.add('hidden');
+                document.getElementById('auth-btn').innerText = "Anmelden";
             }
+            
+            if(localStorage.getItem('tp_theme') === 'dark') document.body.classList.add('dark-theme');
         };
 
+        // AUTHENTIFIZIERUNG (LOGIN / REG)
         function handleAuth() {
-            const nameIn = document.getElementById('user-name').value;
-            const passIn = document.getElementById('user-pass').value;
-            const saved = localStorage.getItem('tp_secure_db');
+            const saved = localStorage.getItem('tp_secure_v41');
+            const passInput = document.getElementById('auth-pass').value;
 
             if (!saved) {
                 // REGISTRIERUNG
-                if (!nameIn || !passIn) return alert("Bitte Name und Passwort wählen!");
-                db.name = nameIn;
-                db.password = passIn;
-                saveAll();
+                const nameInput = document.getElementById('reg-name').value;
+                if (!nameInput || !passInput) return alert("Bitte Name und Passwort eingeben!");
+                
+                db.name = nameInput;
+                db.password = passInput;
+                saveToDB();
                 location.reload();
             } else {
                 // LOGIN
-                const tempDB = JSON.parse(saved);
-                if (passIn === tempDB.password) {
-                    db = tempDB;
-                    unlockApp();
+                const storedDB = JSON.parse(saved);
+                if (passInput === storedDB.password) {
+                    db = storedDB;
+                    document.getElementById('login-overlay').classList.add('hidden');
+                    initApp();
                 } else {
                     document.getElementById('error-msg').classList.remove('hidden');
+                    document.getElementById('auth-pass').value = '';
                 }
             }
         }
 
-        function unlockApp() {
-            document.getElementById('login-overlay').classList.add('hidden');
+        function initApp() {
             document.getElementById('welcome-name').innerText = db.name;
             document.getElementById('user-badge').innerText = db.name.charAt(0).toUpperCase();
             document.getElementById('quick-note').value = db.notes || '';
+            renderClasses();
         }
 
         function nav(p) {
             document.querySelectorAll('.page').forEach(el => el.classList.add('hidden'));
             document.getElementById(p).classList.remove('hidden');
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            document.getElementById('page-title').innerText = p === 'dashboard' ? 'Übersicht' : 'Klassen';
+            document.getElementById('page-title').innerText = p === 'dashboard' ? 'Übersicht' : 'Klassenverwaltung';
+            
+            // Sidebar Active State
+            const items = document.querySelectorAll('.nav-item');
+            if(p === 'dashboard') items[0].classList.add('active');
+            if(p === 'classes') items[1].classList.add('active');
         }
 
-        function saveAll() {
+        function saveToDB() {
             db.notes = document.getElementById('quick-note').value;
-            localStorage.setItem('tp_secure_db', JSON.stringify(db));
+            localStorage.setItem('tp_secure_v41', JSON.stringify(db));
+        }
+
+        function addClass() {
+            const cName = prompt("Name der Klasse (z.B. 10a):");
+            if(cName) {
+                db.classes.push({ name: cName, students: [] });
+                saveToDB();
+                renderClasses();
+            }
+        }
+
+        function renderClasses() {
+            const container = document.getElementById('class-list-container');
+            if(db.classes.length === 0) {
+                container.innerHTML = '<p style="color:var(--text-muted); text-align:center;">Noch keine Klassen angelegt.</p>';
+                return;
+            }
+            container.innerHTML = '';
+            db.classes.forEach((c, i) => {
+                const div = document.createElement('div');
+                div.style = "padding:15px; background:var(--bg-input); border-radius:10px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;";
+                div.innerHTML = `<span><b>Klasse ${c.name}</b></span><button onclick="deleteClass(${i})" style="width:auto; padding:5px 10px; background:var(--danger)">Löschen</button>`;
+                container.appendChild(div);
+            });
+        }
+
+        function deleteClass(i) {
+            if(confirm("Klasse wirklich löschen?")) {
+                db.classes.splice(i, 1);
+                saveToDB();
+                renderClasses();
+            }
         }
 
         function logout() {
-            location.reload(); // Einfach Seite neu laden, Login erscheint wieder
+            location.reload();
         }
 
         function toggleTheme() {
             document.body.classList.toggle('dark-theme');
+            localStorage.setItem('tp_theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
         }
     </script>
 </body>

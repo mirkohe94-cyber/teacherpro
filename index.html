@@ -9,32 +9,33 @@
 
     <style>
         :root {
-            /* --- LUXE V2 PALETTE --- */
+            /* --- LEHRER-DESIGN PALETTE --- */
             --bg-body: #fdfcf8;
-            --bg-sidebar: rgba(244, 241, 234, 0.8);
-            --bg-card: rgba(255, 255, 255, 0.9);
+            --bg-sidebar: rgba(244, 241, 234, 0.85);
+            --bg-card: rgba(255, 255, 255, 0.95);
             --bg-input: #faf9f7;
-            --primary: #5c7a63; 
+            --primary: #5c7a63; /* Klassisches Salbeigrün */
             --primary-light: #e8f0ea;
-            --accent: #cfa86e;
+            --accent: #cfa86e; /* Edles Gold für Highlights */
             --text-main: #2c3e50;
             --text-muted: #95a5a6;
-            --border: rgba(224, 221, 213, 0.6);
+            --border: rgba(224, 221, 213, 0.7);
             --danger: #e74c3c;
             --radius: 20px;
-            --font-ui: "SF Pro Display", system-ui, -apple-system, sans-serif;
-            --shadow-soft: 0 10px 40px rgba(0,0,0,0.04);
+            --font-ui: "SF Pro Rounded", system-ui, -apple-system, sans-serif;
+            --font-head: "New York", "Georgia", serif;
+            --shadow-soft: 0 10px 40px rgba(90, 85, 80, 0.05);
         }
 
         body.dark-theme {
-            --bg-body: #121212;
-            --bg-sidebar: rgba(30, 30, 32, 0.8);
-            --bg-card: rgba(44, 44, 46, 0.9);
-            --bg-input: #3a3a3c;
+            --bg-body: #1c1c1e;
+            --bg-sidebar: rgba(44, 44, 46, 0.85);
+            --bg-card: rgba(58, 58, 60, 0.95);
+            --bg-input: #2c2c2e;
             --text-main: #f2f2f7;
             --text-muted: #8e8e93;
-            --border: rgba(56, 56, 58, 0.6);
-            --primary: #76d68e;
+            --border: rgba(72, 72, 74, 0.7);
+            --primary: #81a68a;
             --shadow-soft: 0 10px 40px rgba(0,0,0,0.4);
         }
 
@@ -43,95 +44,93 @@
         body { 
             font-family: var(--font-ui); background: var(--bg-body); color: var(--text-main); 
             margin: 0; display: flex; height: 100vh; overflow: hidden;
-            background-image: radial-gradient(circle at 10% 20%, rgba(92, 122, 99, 0.05) 0%, transparent 40%);
+            background-image: radial-gradient(circle at 0% 0%, rgba(92, 122, 99, 0.03) 0%, transparent 50%);
         }
 
-        /* --- AUTH --- */
-        #login-overlay { position: fixed; inset: 0; background: var(--bg-body); z-index: 10000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(20px); }
+        /* --- AUTHENTIFIZIERUNG --- */
+        #login-overlay { position: fixed; inset: 0; background: var(--bg-body); z-index: 10000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(25px); }
         .login-card { background: var(--bg-card); padding: 40px; border-radius: 30px; width: 100%; max-width: 400px; box-shadow: var(--shadow-soft); border: 1px solid var(--border); text-align: center; }
 
-        /* --- SIDEBAR --- */
+        /* --- SEITENLEISTE (DESKTOP) --- */
         .sidebar { 
             width: 280px; background: var(--bg-sidebar); border-right: 1px solid var(--border); 
             display: flex; flex-direction: column; padding: 40px 20px; flex-shrink: 0;
             backdrop-filter: blur(15px);
         }
         .nav-item { 
-            padding: 14px 18px; margin-bottom: 8px; border-radius: 15px; color: var(--text-main); 
+            padding: 14px 18px; margin-bottom: 8px; border-radius: 16px; color: var(--text-main); 
             font-weight: 500; cursor: pointer; display: flex; gap: 14px; align-items: center; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .nav-item:hover { background: var(--primary-light); transform: translateX(5px); }
+        .nav-item:hover { background: var(--primary-light); color: var(--primary); }
         .nav-item.active { background: var(--primary); color: white; box-shadow: 0 8px 20px rgba(92, 122, 99, 0.2); }
 
         @media (max-width: 900px) {
             body { flex-direction: column; }
-            .sidebar { width: 100%; height: 80px; flex-direction: row; padding: 0 10px; order: 2; border-top: 1px solid var(--border); border-right: none; justify-content: space-around; padding-bottom: env(safe-area-inset-bottom); }
+            .sidebar { width: 100%; height: 85px; flex-direction: row; padding: 0 10px; order: 2; border-top: 1px solid var(--border); border-right: none; justify-content: space-around; align-items: center; padding-bottom: env(safe-area-inset-bottom); }
             .nav-item span, .logo { display: none; }
-            .main { order: 1; height: calc(100vh - 80px); }
+            .main { order: 1; height: calc(100vh - 85px); }
             .content { padding: 20px; }
         }
 
-        /* --- MAIN CONTENT --- */
+        /* --- HAUPTBEREICH --- */
         .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-        .header { height: 90px; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
+        .header { height: 100px; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
         .content { flex: 1; padding: 0 40px 40px 40px; overflow-y: auto; scroll-behavior: smooth; }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 25px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
         .card { 
-            background: var(--bg-card); border-radius: var(--radius); padding: 25px; 
+            background: var(--bg-card); border-radius: var(--radius); padding: 30px; 
             border: 1px solid var(--border); box-shadow: var(--shadow-soft);
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
         }
-        .card:hover { transform: translateY(-5px); }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 15px 45px rgba(0,0,0,0.06); }
 
         /* INPUTS & BUTTONS */
         input, select, textarea { 
             width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 14px; 
-            background: var(--bg-input); color: var(--text-main); margin-bottom: 15px; font-size: 1rem;
-            transition: all 0.2s;
+            background: var(--bg-input); color: var(--text-main); margin-bottom: 15px; font-size: 1rem; font-family: inherit;
         }
-        input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-light); }
-        
         button { 
-            background: var(--primary); color: white; border: none; padding: 14px 25px; 
+            background: var(--primary); color: white; border: none; padding: 14px 28px; 
             border-radius: 14px; font-weight: 700; cursor: pointer; transition: all 0.3s;
-            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: inherit;
         }
         button:hover { filter: brightness(1.1); transform: scale(1.02); }
-        button:active { transform: scale(0.98); }
+        button.secondary { background: var(--bg-input); color: var(--text-main); border: 1px solid var(--border); }
 
-        /* --- SPECIAL MODULES --- */
-        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+        /* SPEZIAL-MODULE */
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; }
         .cal-day { 
-            min-height: 90px; background: var(--bg-input); border-radius: 12px; padding: 8px; 
-            font-size: 0.85rem; cursor: pointer; transition: 0.2s; border: 1px solid transparent;
+            min-height: 100px; background: var(--bg-input); border-radius: 15px; padding: 10px; 
+            font-size: 0.9rem; cursor: pointer; transition: 0.2s; border: 1px solid transparent;
         }
         .cal-day:hover { background: var(--bg-card); border-color: var(--primary); }
-        .cal-day.today { background: var(--primary-light); border: 2px solid var(--primary); }
+        .cal-day.today { background: var(--primary-light); border: 2px solid var(--primary); font-weight: bold; }
 
         .seat { 
-            background: var(--bg-input); height: 80px; border-radius: 18px; border: 2px dashed var(--border);
+            background: var(--bg-input); height: 85px; border-radius: 18px; border: 2px dashed var(--border);
             display: flex; align-items: center; justify-content: center; font-weight: bold; transition: 0.3s;
+            text-align: center; padding: 5px; font-size: 0.85rem;
         }
         .seat.occupied { background: var(--bg-card); border: 2px solid var(--primary); color: var(--primary); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
 
-        .icon { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; }
+        .icon { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     </style>
 </head>
 <body>
 
     <div id="login-overlay">
         <div class="login-card">
-            <h1 id="log-t" style="color:var(--primary); margin:0; font-size: 2rem;">TeacherPro</h1>
-            <p id="log-d" style="color:var(--text-muted); margin-bottom:30px;">Premium Schul-Management</p>
-            <div id="reg-box"><input type="text" id="reg-name" placeholder="Vollständiger Name"></div>
+            <h1 id="log-t" style="color:var(--primary); margin:0; font-size: 2.2rem; font-family: var(--font-head);">TeacherPro</h1>
+            <p id="log-d" style="color:var(--text-muted); margin-bottom:30px; font-size: 0.95rem;">Dein digitaler Schreibtisch</p>
+            <div id="reg-box"><input type="text" id="reg-name" placeholder="Dein vollständiger Name"></div>
             <input type="password" id="log-pass" placeholder="Master-Passwort">
-            <button onclick="handleAuth()" style="width:100%">Eintreten</button>
+            <button onclick="handleAuth()" style="width:100%">Anmelden 🌿</button>
         </div>
     </div>
 
     <nav class="sidebar">
-        <div class="logo" style="font-weight:900; color:var(--primary); margin-bottom:40px; font-size:1.6rem; letter-spacing: -1px;">TeacherPro <span style="font-weight:300; font-size:0.8rem">v4.5</span></div>
+        <div class="logo" style="font-weight:900; color:var(--primary); margin-bottom:45px; font-size:1.7rem; letter-spacing: -1px; font-family: var(--font-head);">TeacherPro <span style="font-weight:300; font-size:0.8rem; vertical-align: middle; opacity: 0.5;">v4.5</span></div>
         <div class="nav-item active" onclick="nav('dashboard')"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg><span>Dashboard</span></div>
         <div class="nav-item" onclick="nav('calendar')"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg><span>Kalender</span></div>
         <div class="nav-item" onclick="nav('classes')"><svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg><span>Klassenliste</span></div>
@@ -144,36 +143,37 @@
 
     <main class="main">
         <header class="header">
-            <h2 id="page-t" style="font-weight: 800; font-size: 1.8rem; letter-spacing: -0.5px;">Dashboard</h2>
-            <div id="u-badge" style="width:45px; height:45px; background:var(--primary); color:white; border-radius:15px; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size: 1.2rem; transform: rotate(5deg);">?</div>
+            <h2 id="page-t" style="font-weight: 800; font-size: 2rem; letter-spacing: -0.5px; font-family: var(--font-head);">Dashboard</h2>
+            <div id="u-badge" style="width:50px; height:50px; background:var(--primary); color:white; border-radius:18px; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size: 1.3rem; box-shadow: 0 10px 20px rgba(92, 122, 99, 0.2);">?</div>
         </header>
 
         <div class="content">
             
             <div id="dashboard" class="page">
                 <div class="grid">
-                    <div class="card" style="grid-column:1/-1; background: linear-gradient(135deg, var(--primary), #4a6350); color: white; border:none; padding: 40px;">
-                        <h2 style="margin:0; font-size: 2.2rem;">Hallo, <span id="u-name">...</span>!</h2>
-                        <p style="opacity: 0.9; margin-top: 10px;">Dein Unterrichtstag ist bereit. Du hast <span id="stat-classes">0</span> Klassen geplant.</p>
+                    <div class="card" style="grid-column:1/-1; background: linear-gradient(135deg, var(--primary), #4a6350); color: white; border:none; padding: 45px; position: relative; overflow: hidden;">
+                        <div style="position: absolute; right: -20px; top: -20px; font-size: 15rem; opacity: 0.1;">🍎</div>
+                        <h2 style="margin:0; font-size: 2.5rem; font-family: var(--font-head);">Hallo, <span id="u-name">...</span>!</h2>
+                        <p style="opacity: 0.9; margin-top: 15px; font-size: 1.1rem;">Willkommen zurück im Dienst. Du hast <span id="stat-classes" style="font-weight: bold;">0</span> aktive Klassen in deiner Verwaltung.</p>
                     </div>
                     <div class="card">
-                        <h3>📝 Schneller Fokus</h3>
-                        <textarea id="note-area" style="height:180px; border:none; padding:15px;" oninput="save()" placeholder="Was ist heute besonders wichtig?"></textarea>
+                        <h3>✍️ Heute wichtig</h3>
+                        <textarea id="note-area" style="height:200px; border:none; padding:15px; line-height: 1.6;" oninput="save()" placeholder="Deine Gedanken für heute..."></textarea>
                     </div>
                     <div class="card">
-                        <h3>✅ Offene Aufgaben</h3>
-                        <div id="td-list" style="max-height: 150px; overflow-y: auto; margin-bottom: 15px;"></div>
-                        <div style="display:flex; gap:10px;"><input id="td-in" style="margin:0" placeholder="Neue Aufgabe..."><button onclick="addTodo()" style="padding: 10px 15px;">+</button></div>
+                        <h3>📋 Aufgaben</h3>
+                        <div id="td-list" style="margin-bottom: 20px;"></div>
+                        <div style="display:flex; gap:12px;"><input id="td-in" style="margin:0" placeholder="Neue Aufgabe..."><button onclick="addTodo()" style="padding: 10px 18px;">Hinzufügen</button></div>
                     </div>
                 </div>
             </div>
 
             <div id="calendar" class="page hidden">
                 <div class="card">
-                    <div class="cal-header">
-                        <button class="secondary" onclick="changeM(-1)">◀</button>
-                        <h3 id="cal-m-t">Januar 2026</h3>
-                        <button class="secondary" onclick="changeM(1)">▶</button>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
+                        <button class="secondary" onclick="changeM(-1)">◀ Letzter Monat</button>
+                        <h3 id="cal-m-t" style="margin:0; font-family: var(--font-head); font-size: 1.5rem;">Januar 2026</h3>
+                        <button class="secondary" onclick="changeM(1)">Nächster Monat ▶</button>
                     </div>
                     <div class="cal-grid" id="cal-g"></div>
                 </div>
@@ -181,9 +181,9 @@
 
             <div id="classes" class="page hidden">
                 <div class="card">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                        <h3>Klassen & Noten</h3>
-                        <button onclick="addClass()">+ Neue Klasse</button>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
+                        <h3 style="margin:0">Klassenbuch</h3>
+                        <button onclick="addClass()">+ Neue Klasse anlegen</button>
                     </div>
                     <div id="cls-list"></div>
                 </div>
@@ -191,7 +191,10 @@
 
             <div id="seating" class="page hidden">
                 <div class="card">
-                    <select id="s-cls-sel" onchange="renderS()"><option value="">Klasse wählen...</option></select>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
+                        <h3>Raumplanung</h3>
+                        <select id="s-cls-sel" onchange="renderS()" style="width:250px; margin:0;"><option value="">Wähle eine Klasse...</option></select>
+                    </div>
                     <div id="s-grid" class="seating-grid"></div>
                 </div>
             </div>
@@ -199,17 +202,18 @@
             <div id="tools" class="page hidden">
                 <div class="grid">
                     <div class="card">
-                        <h3>🎲 Zufall</h3>
+                        <h3>🎲 Zufalls-Generator</h3>
+                        <p style="color:var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Wählt eine Person aus der gewählten Klasse aus.</p>
                         <select id="t-cls-sel"><option value="">Klasse wählen...</option></select>
-                        <div id="rnd-res" style="font-size:2.5rem; text-align:center; padding:30px; color:var(--primary); font-weight: 800;">?</div>
-                        <button style="width:100%" onclick="rndS()">Schüler ziehen</button>
+                        <div id="rnd-res" style="font-size:2.8rem; text-align:center; padding:35px; color:var(--primary); font-weight: 900; font-family: var(--font-head);">?</div>
+                        <button style="width:100%" onclick="rndS()">Person ziehen</button>
                     </div>
                     <div class="card" style="text-align: center;">
-                        <h3>⏱️ Prüfungstimer</h3>
-                        <div id="tm-d" style="font-size:4rem; font-weight: 900; margin: 20px 0;">25:00</div>
-                        <div style="display:flex; gap:10px; justify-content:center;">
-                            <button onclick="startT(25)">25m</button>
-                            <button class="secondary" onclick="startT(5)">5m</button>
+                        <h3>⏱️ Fokus-Timer</h3>
+                        <div id="tm-d" style="font-size:4.5rem; font-weight: 900; margin: 25px 0; font-family: monospace;">25:00</div>
+                        <div style="display:flex; gap:12px; justify-content:center;">
+                            <button onclick="startT(25)">Stillarbeit (25m)</button>
+                            <button class="secondary" onclick="startT(5)">Pause (5m)</button>
                             <button class="secondary" style="color:var(--danger)" onclick="stopTimer()">Reset</button>
                         </div>
                     </div>
@@ -224,13 +228,13 @@
         let timerInterval;
 
         window.onload = () => {
-            const s = localStorage.getItem('tp_luxe_db');
-            if(!s) { document.getElementById('log-t').innerText="Willkommen"; }
+            const s = localStorage.getItem('tp_premium_v45');
+            if(!s) { document.getElementById('log-t').innerText="Willkommen!"; }
             else { document.getElementById('reg-box').classList.add('hidden'); }
         };
 
         function handleAuth() {
-            const s = localStorage.getItem('tp_luxe_db');
+            const s = localStorage.getItem('tp_premium_v45');
             const p = document.getElementById('log-pass').value;
             if(!s) {
                 const n = document.getElementById('reg-name').value;
@@ -239,7 +243,7 @@
             } else {
                 const st = JSON.parse(s);
                 if(p === st.pass) { db=st; document.getElementById('login-overlay').classList.add('hidden'); init(); }
-                else alert("Passwort inkorrekt.");
+                else alert("Das Passwort ist nicht korrekt.");
             }
         }
 
@@ -252,16 +256,16 @@
         }
 
         function save() { 
-            db.notes=document.getElementById('note-area').value; 
-            localStorage.setItem('tp_luxe_db', JSON.stringify(db)); 
+            db.notes = document.getElementById('note-area').value; 
+            localStorage.setItem('tp_premium_v45', JSON.stringify(db)); 
         }
 
         function nav(p) {
             document.querySelectorAll('.page').forEach(e=>e.classList.add('hidden'));
             document.getElementById(p).classList.remove('hidden');
             document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active'));
-            document.getElementById('page-t').innerText=p.charAt(0).toUpperCase() + p.slice(1);
-            // Highlight nav
+            document.getElementById('page-t').innerText=p.charAt(0).toUpperCase() + p.slice(1).replace('calendar', 'Kalender').replace('classes', 'Klassenliste').replace('seating', 'Sitzplan').replace('tools', 'Werkzeuge');
+            
             const items = document.querySelectorAll('.nav-item');
             const map = {'dashboard':0, 'calendar':1, 'classes':2, 'seating':3, 'tools':4};
             items[map[p]].classList.add('active');
@@ -269,20 +273,20 @@
 
         function renderTD() {
             const l=document.getElementById('td-list'); l.innerHTML='';
-            db.todos.forEach((t,i)=> l.innerHTML+=`<div style="padding:10px; background:var(--bg-input); border-radius:10px; margin-bottom:5px; display:flex; justify-content:space-between; align-items:center;"><span>${t}</span><button onclick="db.todos.splice(${i},1);save();renderTD()" style="padding:5px 10px; background:none; color:var(--danger)">✕</button></div>`);
+            db.todos.forEach((t,i)=> l.innerHTML+=`<div style="padding:12px; background:var(--bg-input); border-radius:12px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; box-shadow: 0 2px 5px rgba(0,0,0,0.02);"><span>${t}</span><button onclick="db.todos.splice(${i},1);save();renderTD()" style="padding:5px 10px; background:none; color:var(--danger); font-size: 1.2rem;">✕</button></div>`);
         }
         function addTodo() { const i=document.getElementById('td-in'); if(i.value){db.todos.push(i.value);i.value='';save();renderTD();}}
 
-        function addClass() { const n=prompt("Name der Klasse (z.B. 10a):"); if(n){db.classes.push({n,ss:[],sts:new Array(16).fill(null)});save();renderC();populate();}}
+        function addClass() { const n=prompt("Name der neuen Klasse:"); if(n){db.classes.push({n,ss:[],sts:new Array(16).fill(null)});save();renderC();populate();}}
         function renderC() {
             const l=document.getElementById('cls-list'); l.innerHTML='';
-            db.classes.forEach((c,i)=> l.innerHTML+=`<div class="card" style="margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;"><div><b>Klasse ${c.n}</b><br><small>${c.ss.length} Schüler</small></div><button class="secondary" onclick="addS(${i})">+ Schüler</button></div>`);
+            db.classes.forEach((c,i)=> l.innerHTML+=`<div class="card" style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; padding: 20px;"><div><b style="font-size: 1.2rem;">Klasse ${c.n}</b><br><small style="color:var(--text-muted)">${c.ss.length} Schülerinnen & Schüler</small></div><button class="secondary" onclick="addS(${i})">+ Hinzufügen</button></div>`);
         }
-        function addS(i){const n=prompt("Name des Schülers:"); if(n){db.classes[i].ss.push(n);save();renderC();}}
+        function addS(i){const n=prompt("Name des Schülers/der Schülerin:"); if(n){db.classes[i].ss.push(n);save();renderC();}}
 
         function populate() {
             const s1=document.getElementById('s-cls-sel'), s2=document.getElementById('t-cls-sel');
-            s1.innerHTML=s2.innerHTML='<option value="">Wählen...</option>';
+            s1.innerHTML=s2.innerHTML='<option value="">Wähle eine Klasse...</option>';
             db.classes.forEach((c,i)=>{const o=`<option value="${i}">${c.n}</option>`; s1.innerHTML+=o; s2.innerHTML+=o;});
         }
 
@@ -291,7 +295,7 @@
             if(!i)return;
             db.classes[i].sts.forEach((s,idx)=>{
                 const d=document.createElement('div'); d.className=`seat ${s?'occupied':''}`; d.innerText=s||'Frei';
-                d.onclick=()=>{const n=prompt("Schüler:"); db.classes[i].sts[idx]=n;save();renderS();};
+                d.onclick=()=>{const n=prompt("Platz belegen mit Name:"); db.classes[i].sts[idx]=n;save();renderS();};
                 g.appendChild(d);
             });
         }
@@ -302,8 +306,8 @@
             let j = 0;
             const interval = setInterval(() => {
                 res.innerText = db.classes[i].ss[Math.floor(Math.random()*db.classes[i].ss.length)];
-                if(j++ > 15) { clearInterval(interval); res.style.color = 'var(--accent)'; }
-            }, 50);
+                if(j++ > 12) { clearInterval(interval); res.style.color = 'var(--accent)'; }
+            }, 60);
         }
 
         function startT(m){
@@ -312,7 +316,7 @@
             timerInterval = setInterval(()=>{
                 s--; 
                 document.getElementById('tm-d').innerText=`${Math.floor(s/60)}:${s%60<10?'0':''}${s%60}`;
-                if(s<=0) { clearInterval(timerInterval); alert("Zeit abgelaufen!"); }
+                if(s<=0) { clearInterval(timerInterval); alert("Die Zeit ist um! 🔔"); }
             },1000);
         }
         function stopTimer() { clearInterval(timerInterval); document.getElementById('tm-d').innerText = "25:00"; }
@@ -327,9 +331,9 @@
             for(let i=0;i<off;i++)g.innerHTML+=`<div></div>`;
             for(let d=1;d<=len;d++){
                 const k=`${cY}-${cM}-${d}`; const div=document.createElement('div'); div.className='cal-day';
-                if(new Date().getDate() === d && new Date().getMonth() === cM) div.classList.add('today');
-                div.innerHTML=`<b>${d}</b><br><small>${db.evs[k]||''}</small>`;
-                div.onclick=()=>{const e=prompt("Ereignis:",db.evs[k]||""); db.evs[k]=e;save();renderCal();};
+                if(new Date().getDate() === d && new Date().getMonth() === cM && new Date().getFullYear() === cY) div.classList.add('today');
+                div.innerHTML=`<b>${d}</b><br><div style="margin-top:5px; font-size:0.75rem; color:var(--primary)">${db.evs[k]||''}</div>`;
+                div.onclick=()=>{const e=prompt("Notiz für diesen Tag:",db.evs[k]||""); db.evs[k]=e;save();renderCal();};
                 g.appendChild(div);
             }
         }

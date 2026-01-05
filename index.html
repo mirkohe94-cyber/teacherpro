@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>TeacherPro v4.1 - Secure Edition</title>
+    <title>TeacherPro v4.2 Final - Full Secure Edition</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -19,6 +19,8 @@
             --text-muted: #95a5a6;
             --border: #e0ddd5;
             --danger: #e74c3c;
+            --success: #27ae60;
+            --warning: #f1c40f;
             --radius: 16px;
             --font-ui: "SF Pro Rounded", system-ui, -apple-system, sans-serif;
             --font-head: "Palatino", serif; 
@@ -36,257 +38,271 @@
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
+        body { font-family: var(--font-ui); background: var(--bg-body); color: var(--text-main); margin: 0; display: flex; height: 100vh; overflow: hidden; }
 
-        body { 
-            font-family: var(--font-ui); background: var(--bg-body); color: var(--text-main); 
-            margin: 0; display: flex; height: 100vh; overflow: hidden;
-        }
-
-        /* --- LOGIN SCREEN --- */
-        #login-overlay {
-            position: fixed; inset: 0; background: var(--bg-body); z-index: 10000;
-            display: flex; align-items: center; justify-content: center; padding: 20px;
-        }
+        /* --- LOGIN --- */
+        #login-overlay { position: fixed; inset: 0; background: var(--bg-body); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .login-card { background: var(--bg-card); padding: 30px; border-radius: 24px; width: 100%; max-width: 350px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); border: 1px solid var(--border); text-align: center; }
 
-        /* --- LAYOUT --- */
-        .sidebar { 
-            width: 260px; background: var(--bg-sidebar); border-right: 1px solid var(--border); 
-            display: flex; flex-direction: column; padding: 40px 16px; flex-shrink: 0;
-        }
-        .nav-item { 
-            padding: 12px 14px; margin-bottom: 4px; border-radius: 12px; color: var(--text-main); 
-            font-weight: 500; cursor: pointer; display: flex; gap: 10px; align-items: center; transition: 0.2s;
-        }
+        /* --- NAVIGATION --- */
+        .sidebar { width: 260px; background: var(--bg-sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 40px 16px; flex-shrink: 0; }
+        .nav-item { padding: 12px 14px; margin-bottom: 4px; border-radius: 12px; color: var(--text-main); font-weight: 500; cursor: pointer; display: flex; gap: 10px; align-items: center; transition: 0.2s; }
         .nav-item.active { background: var(--bg-card); color: var(--primary); font-weight: 700; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
 
         @media (max-width: 800px) {
             body { flex-direction: column; }
-            .sidebar { 
-                width: 100%; height: 70px; flex-direction: row; padding: 0 10px; 
-                order: 2; border-right: none; border-top: 1px solid var(--border);
-                justify-content: space-around; align-items: center; padding-bottom: env(safe-area-inset-bottom);
-            }
+            .sidebar { width: 100%; height: 70px; flex-direction: row; padding: 0 10px; order: 2; border-top: 1px solid var(--border); justify-content: space-around; align-items: center; padding-bottom: env(safe-area-inset-bottom); }
             .nav-item span, .logo { display: none; }
             .main { order: 1; height: calc(100vh - 70px); }
             .content { padding: 15px; }
-            .header { padding: 0 20px; height: 60px; }
         }
 
         .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
         .header { height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
-        .page-title { margin: 0; font-family: var(--font-head); font-size: 1.6rem; }
         .content { flex: 1; padding: 0 40px 40px 40px; overflow-y: auto; }
 
         /* --- UI ELEMENTS --- */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .card { background: var(--bg-card); border-radius: var(--radius); padding: 20px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
-        
-        input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-input); color: var(--text-main); margin-bottom: 12px; font-size: 1rem; }
-        button { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; width: 100%; font-size: 1rem; transition: 0.2s; }
-        button:active { transform: scale(0.98); }
-        
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+        .card { background: var(--bg-card); border-radius: var(--radius); padding: 25px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.03); margin-bottom: 20px; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-input); color: var(--text-main); margin-bottom: 12px; font-size: 1rem; }
+        button { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; }
         .hidden { display: none !important; }
-        .icon { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; }
-        
-        textarea { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-input); color: var(--text-main); font-family: inherit; font-size: 1rem; resize: none; }
+        .icon { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+        /* KALENDER STYLE */
+        .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+        .cal-day-name { text-align: center; font-size: 0.7rem; font-weight: bold; color: var(--primary); text-transform: uppercase; }
+        .cal-day { min-height: 80px; background: var(--bg-input); border-radius: 10px; padding: 5px; font-size: 0.8rem; cursor: pointer; border: 1px solid transparent; }
+        .cal-day:hover { border-color: var(--primary); }
+        .cal-day.today { background: var(--primary-light); border: 1px solid var(--primary); }
+        .cal-event-dot { width: 5px; height: 5px; background: var(--primary); border-radius: 50%; margin: 2px auto; }
+
+        /* SITZPLAN GRID */
+        .seating-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 20px; }
+        .seat { background: var(--bg-input); height: 70px; border-radius: 12px; border: 2px dashed var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; text-align: center; padding: 5px; font-weight: 600; font-size: 0.8rem; }
+        .seat.occupied { background: var(--bg-card); border-style: solid; border-color: var(--primary); color: var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
     </style>
 </head>
 <body>
 
     <div id="login-overlay">
         <div class="login-card">
-            <h2 id="login-title" style="color:var(--primary); margin:0 0 10px 0; font-family: var(--font-head);">TeacherPro</h2>
-            <p id="login-desc" style="color:var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Sicherer Zugriff</p>
-            
-            <div id="reg-fields">
-                <input type="text" id="reg-name" placeholder="Dein Name">
-            </div>
+            <h2 id="login-title" style="color:var(--primary); margin:0 0 10px 0;">TeacherPro</h2>
+            <p id="login-desc" style="color:var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Master-Passwort erforderlich</p>
+            <div id="reg-fields"><input type="text" id="reg-name" placeholder="Dein Name"></div>
             <input type="password" id="auth-pass" placeholder="Passwort">
-            
-            <button onclick="handleAuth()" id="auth-btn">Einloggen</button>
+            <button onclick="handleAuth()" id="auth-btn" style="width:100%">Anmelden</button>
             <p id="error-msg" style="color:var(--danger); font-size:0.8rem; margin-top:12px;" class="hidden">Falsches Passwort!</p>
         </div>
     </div>
 
     <nav class="sidebar">
-        <div style="font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-bottom: 30px; padding-left: 10px;" class="logo">TeacherPro</div>
-        
-        <div class="nav-item active" onclick="nav('dashboard')">
-            <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-            <span>Übersicht</span>
-        </div>
-        
-        <div class="nav-item" onclick="nav('classes')">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-            <span>Klassen</span>
-        </div>
-
+        <div class="logo" style="font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-bottom: 30px; padding-left: 10px;">TeacherPro</div>
+        <div class="nav-item active" onclick="nav('dashboard')"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg><span>Übersicht</span></div>
+        <div class="nav-item" onclick="nav('calendar')"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg><span>Kalender</span></div>
+        <div class="nav-item" onclick="nav('classes')"><svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg><span>Klassen</span></div>
+        <div class="nav-item" onclick="nav('seating')"><svg class="icon" viewBox="0 0 24 24"><path d="M4 18v2h16v-2"></path><path d="M4 14a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4H4z"></path></svg><span>Sitzplan</span></div>
+        <div class="nav-item" onclick="nav('tools')"><svg class="icon" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg><span>Werkzeuge</span></div>
         <div style="flex:1"></div>
-
-        <div class="nav-item" onclick="toggleTheme()">
-            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line></svg>
-            <span>Modus</span>
-        </div>
-        
-        <div class="nav-item" onclick="logout()" style="color:var(--danger)">
-            <svg class="icon" viewBox="0 0 24 24" style="stroke: var(--danger)"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-            <span>Abmelden</span>
-        </div>
+        <div class="nav-item" onclick="toggleTheme()"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle></svg><span>Design</span></div>
+        <div class="nav-item" onclick="location.reload()" style="color:var(--danger)"><span>Abmelden</span></div>
     </nav>
 
     <main class="main">
         <header class="header">
-            <h1 id="page-title" class="page-title">Übersicht</h1>
-            <div id="user-badge" style="width:40px; height:40px; background:var(--primary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; box-shadow: var(--shadow);">?</div>
+            <h1 id="page-title" style="margin:0; font-family: var(--font-head);">Übersicht</h1>
+            <div id="user-badge" style="width:40px; height:40px; background:var(--primary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold;">?</div>
         </header>
 
         <div class="content">
             <div id="dashboard" class="page">
                 <div class="grid">
-                    <div class="card" style="grid-column: 1 / -1; background: var(--primary-light); border: none;">
-                        <h2 style="margin:0; color: var(--primary);">Hallo, <span id="welcome-name">Lehrkraft</span>! 🌿</h2>
-                        <p style="margin:5px 0 0 0; opacity: 0.8;">Alle Daten sind lokal auf diesem Gerät gesichert.</p>
+                    <div class="card" style="grid-column: 1/-1; background: var(--primary-light); border:none;">
+                        <h2 style="margin:0">Willkommen, <span id="welcome-name">...</span>! 🍏</h2>
                     </div>
-                    
                     <div class="card">
                         <h3>Schnellnotiz</h3>
-                        <textarea id="quick-note" style="height:150px;" oninput="saveToDB()" placeholder="Was gibt es heute zu tun?"></textarea>
+                        <textarea id="quick-note" style="height:150px;" oninput="saveDB()" placeholder="Wichtiges für heute..."></textarea>
                     </div>
-
                     <div class="card">
-                        <h3>Info</h3>
-                        <p style="font-size: 0.9rem; line-height: 1.5; color: var(--text-muted);">
-                            Dies ist TeacherPro v4.1. Du kannst Klassen anlegen und Notizen verwalten. Deine Daten bleiben in deinem Browser-Speicher.
-                        </p>
+                        <h3>To-Do Liste</h3>
+                        <div id="todo-list"></div>
+                        <div style="display:flex; gap:10px; margin-top:10px;"><input id="todo-in" style="margin:0" placeholder="Neu..."><button onclick="addTodo()">+</button></div>
                     </div>
+                </div>
+            </div>
+
+            <div id="calendar" class="page hidden">
+                <div class="card">
+                    <div class="cal-header">
+                        <button class="secondary" onclick="changeMonth(-1)">◀</button>
+                        <h3 id="cal-month-year">Januar 2026</h3>
+                        <button class="secondary" onclick="changeMonth(1)">▶</button>
+                    </div>
+                    <div class="cal-grid" id="cal-grid"></div>
                 </div>
             </div>
 
             <div id="classes" class="page hidden">
                 <div class="card">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                        <h3 style="margin:0">Meine Klassen</h3>
-                        <button onclick="addClass()" style="width:auto; padding:8px 15px;">+ Neu</button>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                        <h3>Klassenverwaltung</h3>
+                        <button onclick="addClass()">+ Neue Klasse</button>
                     </div>
-                    <div id="class-list-container">
+                    <div id="class-container"></div>
+                </div>
+            </div>
+
+            <div id="seating" class="page hidden">
+                <div class="card">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h3>Sitzplan</h3>
+                        <select id="seat-cls-sel" onchange="renderSeats()" style="width:200px; margin:0;"><option value="">Klasse wählen...</option></select>
+                    </div>
+                    <div id="seat-grid" class="seating-grid"></div>
+                </div>
+            </div>
+
+            <div id="tools" class="page hidden">
+                <div class="grid">
+                    <div class="card">
+                        <h3>🎲 Zufallsschüler</h3>
+                        <select id="tool-cls-sel" style="margin-top:10px;"><option value="">Klasse wählen...</option></select>
+                        <div id="random-res" style="font-size:2rem; text-align:center; padding:20px; color:var(--primary)">?</div>
+                        <button style="width:100%" onclick="pickRandom()">Auswählen</button>
+                    </div>
+                    <div class="card">
+                        <h3>⏱️ Fokus-Timer</h3>
+                        <div id="timer-display" style="font-size:3rem; text-align:center; padding:10px;">25:00</div>
+                        <div style="display:flex; gap:10px; justify-content:center;">
+                            <button class="secondary" onclick="startTimer(25)">25m</button>
+                            <button class="danger" onclick="stopTimer()">Stop</button>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 
     <script>
-        let db = { name: '', password: '', notes: '', classes: [] };
+        let db = { name: '', password: '', notes: '', todos: [], classes: [], events: {} };
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
 
-        // BEIM LADEN PRÜFEN
         window.onload = () => {
-            const saved = localStorage.getItem('tp_secure_v41');
+            const saved = localStorage.getItem('tp_full_secure_db');
             if (!saved) {
-                // Erster Start -> Registrierungs-Modus
                 document.getElementById('login-title').innerText = "Ersteinrichtung";
-                document.getElementById('login-desc').innerText = "Wähle einen Namen und Passwort";
-                document.getElementById('auth-btn').innerText = "Konto erstellen";
             } else {
-                // Normaler Start -> Login-Modus
                 document.getElementById('reg-fields').classList.add('hidden');
-                document.getElementById('auth-btn').innerText = "Anmelden";
             }
-            
-            if(localStorage.getItem('tp_theme') === 'dark') document.body.classList.add('dark-theme');
         };
 
-        // AUTHENTIFIZIERUNG (LOGIN / REG)
         function handleAuth() {
-            const saved = localStorage.getItem('tp_secure_v41');
-            const passInput = document.getElementById('auth-pass').value;
-
+            const saved = localStorage.getItem('tp_full_secure_db');
+            const pass = document.getElementById('auth-pass').value;
             if (!saved) {
-                // REGISTRIERUNG
-                const nameInput = document.getElementById('reg-name').value;
-                if (!nameInput || !passInput) return alert("Bitte Name und Passwort eingeben!");
-                
-                db.name = nameInput;
-                db.password = passInput;
-                saveToDB();
-                location.reload();
+                const name = document.getElementById('reg-name').value;
+                if (!name || !pass) return alert("Bitte Daten eingeben!");
+                db.name = name; db.password = pass; saveDB(); location.reload();
             } else {
-                // LOGIN
-                const storedDB = JSON.parse(saved);
-                if (passInput === storedDB.password) {
-                    db = storedDB;
-                    document.getElementById('login-overlay').classList.add('hidden');
-                    initApp();
-                } else {
-                    document.getElementById('error-msg').classList.remove('hidden');
-                    document.getElementById('auth-pass').value = '';
-                }
+                const stored = JSON.parse(saved);
+                if (pass === stored.password) {
+                    db = stored; document.getElementById('login-overlay').classList.add('hidden'); init();
+                } else { document.getElementById('error-msg').classList.remove('hidden'); }
             }
         }
 
-        function initApp() {
+        function init() {
             document.getElementById('welcome-name').innerText = db.name;
             document.getElementById('user-badge').innerText = db.name.charAt(0).toUpperCase();
             document.getElementById('quick-note').value = db.notes || '';
-            renderClasses();
+            renderTodos(); renderClasses(); populateSelects(); renderCalendar();
         }
 
         function nav(p) {
-            document.querySelectorAll('.page').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.page').forEach(e => e.classList.add('hidden'));
             document.getElementById(p).classList.remove('hidden');
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            document.getElementById('page-title').innerText = p === 'dashboard' ? 'Übersicht' : 'Klassenverwaltung';
-            
-            // Sidebar Active State
-            const items = document.querySelectorAll('.nav-item');
-            if(p === 'dashboard') items[0].classList.add('active');
-            if(p === 'classes') items[1].classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(e => e.classList.remove('active'));
+            document.getElementById('page-title').innerText = p.toUpperCase();
         }
 
-        function saveToDB() {
+        function saveDB() {
             db.notes = document.getElementById('quick-note').value;
-            localStorage.setItem('tp_secure_v41', JSON.stringify(db));
+            localStorage.setItem('tp_full_secure_db', JSON.stringify(db));
         }
 
-        function addClass() {
-            const cName = prompt("Name der Klasse (z.B. 10a):");
-            if(cName) {
-                db.classes.push({ name: cName, students: [] });
-                saveToDB();
-                renderClasses();
-            }
-        }
+        // --- KALENDER LOGIK ---
+        function renderCalendar() {
+            const grid = document.getElementById('cal-grid');
+            const title = document.getElementById('cal-month-year');
+            const months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+            title.innerText = `${months[currentMonth]} ${currentYear}`;
+            grid.innerHTML = '';
+            ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'].forEach(d => grid.innerHTML += `<div class="cal-day-name">${d}</div>`);
 
-        function renderClasses() {
-            const container = document.getElementById('class-list-container');
-            if(db.classes.length === 0) {
-                container.innerHTML = '<p style="color:var(--text-muted); text-align:center;">Noch keine Klassen angelegt.</p>';
-                return;
-            }
-            container.innerHTML = '';
-            db.classes.forEach((c, i) => {
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const offset = firstDay === 0 ? 6 : firstDay - 1;
+
+            for (let i = 0; i < offset; i++) grid.innerHTML += `<div></div>`;
+            for (let d = 1; d <= daysInMonth; d++) {
+                const dateKey = `${currentYear}-${currentMonth}-${d}`;
+                const isToday = new Date().getDate() === d && new Date().getMonth() === currentMonth;
                 const div = document.createElement('div');
-                div.style = "padding:15px; background:var(--bg-input); border-radius:10px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;";
-                div.innerHTML = `<span><b>Klasse ${c.name}</b></span><button onclick="deleteClass(${i})" style="width:auto; padding:5px 10px; background:var(--danger)">Löschen</button>`;
-                container.appendChild(div);
+                div.className = `cal-day ${isToday ? 'today' : ''}`;
+                div.innerHTML = `<b>${d}</b>` + (db.events[dateKey] ? `<div class="cal-event-dot"></div><div style="font-size:0.6rem; overflow:hidden">${db.events[dateKey]}</div>` : '');
+                div.onclick = () => {
+                    const note = prompt("Termin für diesen Tag:", db.events[dateKey] || "");
+                    if (note !== null) { db.events[dateKey] = note; saveDB(); renderCalendar(); }
+                };
+                grid.appendChild(div);
+            }
+        }
+        function changeMonth(dir) { currentMonth += dir; if(currentMonth>11){currentMonth=0;currentYear++} if(currentMonth<0){currentMonth=11;currentYear--} renderCalendar(); }
+
+        // --- KLASSEN & SITZPLAN ---
+        function addClass() {
+            const n = prompt("Name der Klasse:");
+            if(n) { db.classes.push({ name: n, students: [], seats: new Array(12).fill(null) }); saveDB(); renderClasses(); populateSelects(); }
+        }
+        function renderClasses() {
+            const c = document.getElementById('class-container'); c.innerHTML = '';
+            db.classes.forEach((cl, i) => {
+                c.innerHTML += `<div style="background:var(--bg-input); padding:10px; border-radius:10px; margin-bottom:10px; display:flex; justify-content:space-between;"><b>${cl.name}</b> <button class="secondary" onclick="addStud(${i})">+ Schüler</button></div>`;
+            });
+        }
+        function addStud(i) { const s = prompt("Name:"); if(s){db.classes[i].students.push(s); saveDB(); renderClasses();}}
+        function populateSelects() {
+            const s1 = document.getElementById('seat-cls-sel'); const s2 = document.getElementById('tool-cls-sel');
+            s1.innerHTML = s2.innerHTML = '<option value="">Wählen...</option>';
+            db.classes.forEach((c, i) => { const opt = `<option value="${i}">${c.name}</option>`; s1.innerHTML += opt; s2.innerHTML += opt; });
+        }
+        function renderSeats() {
+            const i = document.getElementById('seat-cls-sel').value;
+            const grid = document.getElementById('seat-grid'); grid.innerHTML = '';
+            if(!i) return;
+            db.classes[i].seats.forEach((sid, idx) => {
+                const div = document.createElement('div'); div.className = `seat ${sid?'occupied':''}`; div.innerText = sid || 'Frei';
+                div.onclick = () => { const n = prompt("Name:"); db.classes[i].seats[idx] = n; saveDB(); renderSeats(); };
+                grid.appendChild(div);
             });
         }
 
-        function deleteClass(i) {
-            if(confirm("Klasse wirklich löschen?")) {
-                db.classes.splice(i, 1);
-                saveToDB();
-                renderClasses();
-            }
+        // --- TOOLS ---
+        function pickRandom() {
+            const i = document.getElementById('tool-cls-sel').value;
+            if(!i || !db.classes[i].students.length) return;
+            const s = db.classes[i].students;
+            let c = 0; const a = setInterval(() => { document.getElementById('random-res').innerText = s[Math.floor(Math.random()*s.length)]; if(c++>10) clearInterval(a); }, 100);
         }
-
-        function logout() {
-            location.reload();
-        }
-
-        function toggleTheme() {
-            document.body.classList.toggle('dark-theme');
-            localStorage.setItem('tp_theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+        function startTimer(m) { let s = m*60; setInterval(() => { s--; document.getElementById('timer-display').innerText = `${Math.floor(s/60)}:${s%60<10?'0':''}${s%60}`; }, 1000); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+        function addTodo() { const v = document.getElementById('todo-in').value; if(v){db.todos.push({t:v,d:false}); saveDB(); renderTodos(); document.getElementById('todo-in').value='';}}
+        function renderTodos() {
+            const c = document.getElementById('todo-list'); c.innerHTML = '';
+            db.todos.forEach((t, i) => { c.innerHTML += `<div onclick="this.style.opacity=0.5; db.todos[${i}].d=true; saveDB()" style="cursor:pointer; margin-bottom:5px;">- ${t.t}</div>`; });
         }
     </script>
 </body>

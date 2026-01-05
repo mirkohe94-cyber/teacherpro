@@ -2,119 +2,178 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>TeacherPro v4.3 Final - All-In-One</title>
+    <title>TeacherPro v4.5 Luxe Edition</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <style>
         :root {
-            --bg-body: #fdfcf8; --bg-sidebar: #f4f1ea; --bg-card: #ffffff; --bg-input: #faf9f7;
-            --primary: #5c7a63; --primary-light: #e8f0ea; --text-main: #2c3e50; --text-muted: #95a5a6;
-            --border: #e0ddd5; --danger: #e74c3c; --success: #27ae60; --warning: #f1c40f;
-            --radius: 16px; --font-ui: "SF Pro Rounded", system-ui, -apple-system, sans-serif;
+            /* --- LUXE V2 PALETTE --- */
+            --bg-body: #fdfcf8;
+            --bg-sidebar: rgba(244, 241, 234, 0.8);
+            --bg-card: rgba(255, 255, 255, 0.9);
+            --bg-input: #faf9f7;
+            --primary: #5c7a63; 
+            --primary-light: #e8f0ea;
+            --accent: #cfa86e;
+            --text-main: #2c3e50;
+            --text-muted: #95a5a6;
+            --border: rgba(224, 221, 213, 0.6);
+            --danger: #e74c3c;
+            --radius: 20px;
+            --font-ui: "SF Pro Display", system-ui, -apple-system, sans-serif;
+            --shadow-soft: 0 10px 40px rgba(0,0,0,0.04);
         }
+
         body.dark-theme {
-            --bg-body: #1c1c1e; --bg-sidebar: #2c2c2e; --bg-card: #2c2c2e; --bg-input: #3a3a3c;
-            --text-main: #f2f2f7; --text-muted: #aeaeb2; --border: #38383a; --primary: #76d68e;
+            --bg-body: #121212;
+            --bg-sidebar: rgba(30, 30, 32, 0.8);
+            --bg-card: rgba(44, 44, 46, 0.9);
+            --bg-input: #3a3a3c;
+            --text-main: #f2f2f7;
+            --text-muted: #8e8e93;
+            --border: rgba(56, 56, 58, 0.6);
+            --primary: #76d68e;
+            --shadow-soft: 0 10px 40px rgba(0,0,0,0.4);
         }
+
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
-        body { font-family: var(--font-ui); background: var(--bg-body); color: var(--text-main); margin: 0; display: flex; height: 100vh; overflow: hidden; }
-
-        /* LOGIN */
-        #login-overlay { position: fixed; inset: 0; background: var(--bg-body); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; }
-        .login-card { background: var(--bg-card); padding: 30px; border-radius: 24px; width: 100%; max-width: 350px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); border: 1px solid var(--border); text-align: center; }
-
-        /* NAV */
-        .sidebar { width: 260px; background: var(--bg-sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 30px 15px; flex-shrink: 0; }
-        .nav-item { padding: 12px 15px; margin-bottom: 5px; border-radius: 12px; color: var(--text-main); font-weight: 500; cursor: pointer; display: flex; gap: 12px; align-items: center; transition: 0.2s; }
-        .nav-item.active { background: var(--bg-card); color: var(--primary); font-weight: 700; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-
-        @media (max-width: 800px) {
-            body { flex-direction: column; }
-            .sidebar { width: 100%; height: 70px; flex-direction: row; padding: 0 5px; order: 2; border-top: 1px solid var(--border); justify-content: space-around; padding-bottom: env(safe-area-inset-bottom); }
-            .nav-item span, .logo { display: none; }
-            .main { order: 1; height: calc(100vh - 70px); }
-            .content { padding: 15px; }
+        
+        body { 
+            font-family: var(--font-ui); background: var(--bg-body); color: var(--text-main); 
+            margin: 0; display: flex; height: 100vh; overflow: hidden;
+            background-image: radial-gradient(circle at 10% 20%, rgba(92, 122, 99, 0.05) 0%, transparent 40%);
         }
 
+        /* --- AUTH --- */
+        #login-overlay { position: fixed; inset: 0; background: var(--bg-body); z-index: 10000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(20px); }
+        .login-card { background: var(--bg-card); padding: 40px; border-radius: 30px; width: 100%; max-width: 400px; box-shadow: var(--shadow-soft); border: 1px solid var(--border); text-align: center; }
+
+        /* --- SIDEBAR --- */
+        .sidebar { 
+            width: 280px; background: var(--bg-sidebar); border-right: 1px solid var(--border); 
+            display: flex; flex-direction: column; padding: 40px 20px; flex-shrink: 0;
+            backdrop-filter: blur(15px);
+        }
+        .nav-item { 
+            padding: 14px 18px; margin-bottom: 8px; border-radius: 15px; color: var(--text-main); 
+            font-weight: 500; cursor: pointer; display: flex; gap: 14px; align-items: center; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .nav-item:hover { background: var(--primary-light); transform: translateX(5px); }
+        .nav-item.active { background: var(--primary); color: white; box-shadow: 0 8px 20px rgba(92, 122, 99, 0.2); }
+
+        @media (max-width: 900px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: 80px; flex-direction: row; padding: 0 10px; order: 2; border-top: 1px solid var(--border); border-right: none; justify-content: space-around; padding-bottom: env(safe-area-inset-bottom); }
+            .nav-item span, .logo { display: none; }
+            .main { order: 1; height: calc(100vh - 80px); }
+            .content { padding: 20px; }
+        }
+
+        /* --- MAIN CONTENT --- */
         .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-        .header { height: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 30px; }
-        .content { flex: 1; padding: 0 30px 30px 30px; overflow-y: auto; }
+        .header { height: 90px; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
+        .content { flex: 1; padding: 0 40px 40px 40px; overflow-y: auto; scroll-behavior: smooth; }
 
-        /* GRID & CARDS */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .card { background: var(--bg-card); border-radius: var(--radius); padding: 20px; border: 1px solid var(--border); box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-        input, select, textarea { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-input); color: var(--text-main); margin-bottom: 10px; font-size: 1rem; }
-        button { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; }
-        .hidden { display: none !important; }
-        .icon { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 25px; }
+        .card { 
+            background: var(--bg-card); border-radius: var(--radius); padding: 25px; 
+            border: 1px solid var(--border); box-shadow: var(--shadow-soft);
+            transition: transform 0.3s ease;
+        }
+        .card:hover { transform: translateY(-5px); }
 
-        /* CALENDAR */
-        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-        .cal-day { min-height: 70px; background: var(--bg-input); border-radius: 8px; padding: 4px; font-size: 0.75rem; cursor: pointer; }
-        .cal-day.today { border: 2px solid var(--primary); background: var(--primary-light); }
+        /* INPUTS & BUTTONS */
+        input, select, textarea { 
+            width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 14px; 
+            background: var(--bg-input); color: var(--text-main); margin-bottom: 15px; font-size: 1rem;
+            transition: all 0.2s;
+        }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-light); }
+        
+        button { 
+            background: var(--primary); color: white; border: none; padding: 14px 25px; 
+            border-radius: 14px; font-weight: 700; cursor: pointer; transition: all 0.3s;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        button:hover { filter: brightness(1.1); transform: scale(1.02); }
+        button:active { transform: scale(0.98); }
 
-        /* SEATING */
-        .seating-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-        .seat { background: var(--bg-input); height: 60px; border-radius: 10px; border: 2px dashed var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold; cursor: pointer; }
-        .seat.occupied { background: var(--bg-card); border: 2px solid var(--primary); color: var(--primary); }
+        /* --- SPECIAL MODULES --- */
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+        .cal-day { 
+            min-height: 90px; background: var(--bg-input); border-radius: 12px; padding: 8px; 
+            font-size: 0.85rem; cursor: pointer; transition: 0.2s; border: 1px solid transparent;
+        }
+        .cal-day:hover { background: var(--bg-card); border-color: var(--primary); }
+        .cal-day.today { background: var(--primary-light); border: 2px solid var(--primary); }
+
+        .seat { 
+            background: var(--bg-input); height: 80px; border-radius: 18px; border: 2px dashed var(--border);
+            display: flex; align-items: center; justify-content: center; font-weight: bold; transition: 0.3s;
+        }
+        .seat.occupied { background: var(--bg-card); border: 2px solid var(--primary); color: var(--primary); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+
+        .icon { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; }
     </style>
 </head>
 <body>
 
     <div id="login-overlay">
         <div class="login-card">
-            <h2 id="log-t" style="color:var(--primary); margin:0;">TeacherPro</h2>
-            <p id="log-d" style="color:var(--text-muted); font-size:0.8rem; margin-bottom:20px;">Sicherer Login</p>
-            <div id="reg-box"><input type="text" id="reg-name" placeholder="Name"></div>
-            <input type="password" id="log-pass" placeholder="Passwort">
-            <button onclick="handleAuth()" style="width:100%">Anmelden</button>
+            <h1 id="log-t" style="color:var(--primary); margin:0; font-size: 2rem;">TeacherPro</h1>
+            <p id="log-d" style="color:var(--text-muted); margin-bottom:30px;">Premium Schul-Management</p>
+            <div id="reg-box"><input type="text" id="reg-name" placeholder="Vollständiger Name"></div>
+            <input type="password" id="log-pass" placeholder="Master-Passwort">
+            <button onclick="handleAuth()" style="width:100%">Eintreten</button>
         </div>
     </div>
 
     <nav class="sidebar">
-        <div class="logo" style="font-weight:bold; color:var(--primary); margin-bottom:20px; font-size:1.2rem;">TeacherPro v4.3</div>
-        <div class="nav-item active" onclick="nav('dashboard')"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg><span>Übersicht</span></div>
-        <div class="nav-item" onclick="nav('calendar')"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg><span>Kalender</span></div>
-        <div class="nav-item" onclick="nav('classes')"><svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg><span>Klassen</span></div>
+        <div class="logo" style="font-weight:900; color:var(--primary); margin-bottom:40px; font-size:1.6rem; letter-spacing: -1px;">TeacherPro <span style="font-weight:300; font-size:0.8rem">v4.5</span></div>
+        <div class="nav-item active" onclick="nav('dashboard')"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg><span>Dashboard</span></div>
+        <div class="nav-item" onclick="nav('calendar')"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg><span>Kalender</span></div>
+        <div class="nav-item" onclick="nav('classes')"><svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg><span>Klassenliste</span></div>
         <div class="nav-item" onclick="nav('seating')"><svg class="icon" viewBox="0 0 24 24"><path d="M4 18v2h16v-2"></path><path d="M4 14a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4H4z"></path></svg><span>Sitzplan</span></div>
-        <div class="nav-item" onclick="nav('tools')"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>Extras</span></div>
+        <div class="nav-item" onclick="nav('tools')"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>Werkzeuge</span></div>
         <div style="flex:1"></div>
-        <div class="nav-item" onclick="toggleTheme()"><span>Design</span></div>
-        <div class="nav-item" onclick="location.reload()" style="color:var(--danger)"><span>Logout</span></div>
+        <div class="nav-item" onclick="toggleTheme()" style="background: var(--bg-input)"><span>🌓 Design</span></div>
+        <div class="nav-item" onclick="location.reload()" style="color:var(--danger)"><span>Abmelden</span></div>
     </nav>
 
     <main class="main">
         <header class="header">
-            <h2 id="page-t">Übersicht</h2>
-            <div id="u-badge" style="width:35px; height:35px; background:var(--primary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold;">?</div>
+            <h2 id="page-t" style="font-weight: 800; font-size: 1.8rem; letter-spacing: -0.5px;">Dashboard</h2>
+            <div id="u-badge" style="width:45px; height:45px; background:var(--primary); color:white; border-radius:15px; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size: 1.2rem; transform: rotate(5deg);">?</div>
         </header>
+
         <div class="content">
             
             <div id="dashboard" class="page">
                 <div class="grid">
-                    <div class="card" style="grid-column:1/-1; background:var(--primary-light); border:none;">
-                        <h2 style="margin:0">Hallo, <span id="u-name">...</span>! 🍎</h2>
+                    <div class="card" style="grid-column:1/-1; background: linear-gradient(135deg, var(--primary), #4a6350); color: white; border:none; padding: 40px;">
+                        <h2 style="margin:0; font-size: 2.2rem;">Hallo, <span id="u-name">...</span>!</h2>
+                        <p style="opacity: 0.9; margin-top: 10px;">Dein Unterrichtstag ist bereit. Du hast <span id="stat-classes">0</span> Klassen geplant.</p>
                     </div>
                     <div class="card">
-                        <h3>Notizen</h3>
-                        <textarea id="note-area" style="height:150px;" oninput="save()"></textarea>
+                        <h3>📝 Schneller Fokus</h3>
+                        <textarea id="note-area" style="height:180px; border:none; padding:15px;" oninput="save()" placeholder="Was ist heute besonders wichtig?"></textarea>
                     </div>
                     <div class="card">
-                        <h3>To-Do</h3>
-                        <div id="td-list"></div>
-                        <div style="display:flex; gap:5px;"><input id="td-in" style="margin:0"><button onclick="addTodo()">+</button></div>
+                        <h3>✅ Offene Aufgaben</h3>
+                        <div id="td-list" style="max-height: 150px; overflow-y: auto; margin-bottom: 15px;"></div>
+                        <div style="display:flex; gap:10px;"><input id="td-in" style="margin:0" placeholder="Neue Aufgabe..."><button onclick="addTodo()" style="padding: 10px 15px;">+</button></div>
                     </div>
                 </div>
             </div>
 
             <div id="calendar" class="page hidden">
                 <div class="card">
-                    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                        <button onclick="changeM(-1)">◀</button>
-                        <b id="cal-m-t">Januar 2026</b>
-                        <button onclick="changeM(1)">▶</button>
+                    <div class="cal-header">
+                        <button class="secondary" onclick="changeM(-1)">◀</button>
+                        <h3 id="cal-m-t">Januar 2026</h3>
+                        <button class="secondary" onclick="changeM(1)">▶</button>
                     </div>
                     <div class="cal-grid" id="cal-g"></div>
                 </div>
@@ -122,8 +181,11 @@
 
             <div id="classes" class="page hidden">
                 <div class="card">
-                    <button onclick="addClass()">+ Neue Klasse</button>
-                    <div id="cls-list" style="margin-top:15px;"></div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                        <h3>Klassen & Noten</h3>
+                        <button onclick="addClass()">+ Neue Klasse</button>
+                    </div>
+                    <div id="cls-list"></div>
                 </div>
             </div>
 
@@ -137,34 +199,38 @@
             <div id="tools" class="page hidden">
                 <div class="grid">
                     <div class="card">
-                        <h3>Zufall</h3>
+                        <h3>🎲 Zufall</h3>
                         <select id="t-cls-sel"><option value="">Klasse wählen...</option></select>
-                        <div id="rnd-res" style="font-size:1.5rem; text-align:center; padding:15px; color:var(--primary)">?</div>
-                        <button style="width:100%" onclick="rndS()">Pick</button>
+                        <div id="rnd-res" style="font-size:2.5rem; text-align:center; padding:30px; color:var(--primary); font-weight: 800;">?</div>
+                        <button style="width:100%" onclick="rndS()">Schüler ziehen</button>
                     </div>
-                    <div class="card">
-                        <h3>Timer</h3>
-                        <div id="tm-d" style="font-size:2rem; text-align:center;">25:00</div>
-                        <button onclick="startT(25)">25m Start</button>
+                    <div class="card" style="text-align: center;">
+                        <h3>⏱️ Prüfungstimer</h3>
+                        <div id="tm-d" style="font-size:4rem; font-weight: 900; margin: 20px 0;">25:00</div>
+                        <div style="display:flex; gap:10px; justify-content:center;">
+                            <button onclick="startT(25)">25m</button>
+                            <button class="secondary" onclick="startT(5)">5m</button>
+                            <button class="secondary" style="color:var(--danger)" onclick="stopTimer()">Reset</button>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </main>
 
     <script>
         let db = { name: '', pass: '', notes: '', todos: [], classes: [], evs: {} };
         let cM = new Date().getMonth(), cY = 2026;
+        let timerInterval;
 
         window.onload = () => {
-            const s = localStorage.getItem('tp_v43_db');
-            if(!s) { document.getElementById('log-t').innerText="Setup"; }
+            const s = localStorage.getItem('tp_luxe_db');
+            if(!s) { document.getElementById('log-t').innerText="Willkommen"; }
             else { document.getElementById('reg-box').classList.add('hidden'); }
         };
 
         function handleAuth() {
-            const s = localStorage.getItem('tp_v43_db');
+            const s = localStorage.getItem('tp_luxe_db');
             const p = document.getElementById('log-pass').value;
             if(!s) {
                 const n = document.getElementById('reg-name').value;
@@ -173,7 +239,7 @@
             } else {
                 const st = JSON.parse(s);
                 if(p === st.pass) { db=st; document.getElementById('login-overlay').classList.add('hidden'); init(); }
-                else alert("Falsch!");
+                else alert("Passwort inkorrekt.");
             }
         }
 
@@ -181,29 +247,38 @@
             document.getElementById('u-name').innerText=db.name;
             document.getElementById('u-badge').innerText=db.name[0].toUpperCase();
             document.getElementById('note-area').value=db.notes;
+            document.getElementById('stat-classes').innerText=db.classes.length;
             renderTD(); renderC(); renderCal(); populate();
         }
 
-        function save() { db.notes=document.getElementById('note-area').value; localStorage.setItem('tp_v43_db', JSON.stringify(db)); }
+        function save() { 
+            db.notes=document.getElementById('note-area').value; 
+            localStorage.setItem('tp_luxe_db', JSON.stringify(db)); 
+        }
 
         function nav(p) {
             document.querySelectorAll('.page').forEach(e=>e.classList.add('hidden'));
             document.getElementById(p).classList.remove('hidden');
-            document.getElementById('page-t').innerText=p.toUpperCase();
+            document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active'));
+            document.getElementById('page-t').innerText=p.charAt(0).toUpperCase() + p.slice(1);
+            // Highlight nav
+            const items = document.querySelectorAll('.nav-item');
+            const map = {'dashboard':0, 'calendar':1, 'classes':2, 'seating':3, 'tools':4};
+            items[map[p]].classList.add('active');
         }
 
         function renderTD() {
             const l=document.getElementById('td-list'); l.innerHTML='';
-            db.todos.forEach((t,i)=> l.innerHTML+=`<div onclick="db.todos.splice(${i},1);save();renderTD()">${t}</div>`);
+            db.todos.forEach((t,i)=> l.innerHTML+=`<div style="padding:10px; background:var(--bg-input); border-radius:10px; margin-bottom:5px; display:flex; justify-content:space-between; align-items:center;"><span>${t}</span><button onclick="db.todos.splice(${i},1);save();renderTD()" style="padding:5px 10px; background:none; color:var(--danger)">✕</button></div>`);
         }
         function addTodo() { const i=document.getElementById('td-in'); if(i.value){db.todos.push(i.value);i.value='';save();renderTD();}}
 
-        function addClass() { const n=prompt("Klasse:"); if(n){db.classes.push({n,ss:[],sts:new Array(12).fill(null)});save();renderC();populate();}}
+        function addClass() { const n=prompt("Name der Klasse (z.B. 10a):"); if(n){db.classes.push({n,ss:[],sts:new Array(16).fill(null)});save();renderC();populate();}}
         function renderC() {
             const l=document.getElementById('cls-list'); l.innerHTML='';
-            db.classes.forEach((c,i)=> l.innerHTML+=`<div><b>${c.n}</b> <button onclick="addS(${i})">+ Sch.</button></div>`);
+            db.classes.forEach((c,i)=> l.innerHTML+=`<div class="card" style="margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;"><div><b>Klasse ${c.n}</b><br><small>${c.ss.length} Schüler</small></div><button class="secondary" onclick="addS(${i})">+ Schüler</button></div>`);
         }
-        function addS(i){const n=prompt("Name:"); if(n){db.classes[i].ss.push(n);save();renderC();}}
+        function addS(i){const n=prompt("Name des Schülers:"); if(n){db.classes[i].ss.push(n);save();renderC();}}
 
         function populate() {
             const s1=document.getElementById('s-cls-sel'), s2=document.getElementById('t-cls-sel');
@@ -216,33 +291,50 @@
             if(!i)return;
             db.classes[i].sts.forEach((s,idx)=>{
                 const d=document.createElement('div'); d.className=`seat ${s?'occupied':''}`; d.innerText=s||'Frei';
-                d.onclick=()=>{const n=prompt("Name:"); db.classes[i].sts[idx]=n;save();renderS();};
+                d.onclick=()=>{const n=prompt("Schüler:"); db.classes[i].sts[idx]=n;save();renderS();};
                 g.appendChild(d);
             });
         }
 
         function rndS() {
             const i=document.getElementById('t-cls-sel').value; if(!i||!db.classes[i].ss.length)return;
-            document.getElementById('rnd-res').innerText=db.classes[i].ss[Math.floor(Math.random()*db.classes[i].ss.length)];
+            const res = document.getElementById('rnd-res');
+            let j = 0;
+            const interval = setInterval(() => {
+                res.innerText = db.classes[i].ss[Math.floor(Math.random()*db.classes[i].ss.length)];
+                if(j++ > 15) { clearInterval(interval); res.style.color = 'var(--accent)'; }
+            }, 50);
         }
 
-        function startT(m){let s=m*60; setInterval(()=>{s--; document.getElementById('tm-d').innerText=`${Math.floor(s/60)}:${s%60<10?'0':''}${s%60}`;},1000);}
+        function startT(m){
+            clearInterval(timerInterval);
+            let s=m*60; 
+            timerInterval = setInterval(()=>{
+                s--; 
+                document.getElementById('tm-d').innerText=`${Math.floor(s/60)}:${s%60<10?'0':''}${s%60}`;
+                if(s<=0) { clearInterval(timerInterval); alert("Zeit abgelaufen!"); }
+            },1000);
+        }
+        function stopTimer() { clearInterval(timerInterval); document.getElementById('tm-d').innerText = "25:00"; }
 
         function renderCal() {
             const g=document.getElementById('cal-g'); g.innerHTML='';
-            const days=["Mo","Di","Mi","Do","Fr","Sa","So"]; days.forEach(d=>g.innerHTML+=`<div style="font-weight:bold;text-align:center">${d}</div>`);
+            const months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+            document.getElementById('cal-m-t').innerText = `${months[cM]} ${cY}`;
+            const days=["Mo","Di","Mi","Do","Fr","Sa","So"]; days.forEach(d=>g.innerHTML+=`<div class="cal-day-name">${d}</div>`);
             const first=new Date(cY,cM,1).getDay(); const len=new Date(cY,cM+1,0).getDate();
             const off=first===0?6:first-1;
             for(let i=0;i<off;i++)g.innerHTML+=`<div></div>`;
             for(let d=1;d<=len;d++){
                 const k=`${cY}-${cM}-${d}`; const div=document.createElement('div'); div.className='cal-day';
-                div.innerHTML=`<b>${d}</b><br>${db.evs[k]||''}`;
-                div.onclick=()=>{const e=prompt("Event:",db.evs[k]||""); db.evs[k]=e;save();renderCal();};
+                if(new Date().getDate() === d && new Date().getMonth() === cM) div.classList.add('today');
+                div.innerHTML=`<b>${d}</b><br><small>${db.evs[k]||''}</small>`;
+                div.onclick=()=>{const e=prompt("Ereignis:",db.evs[k]||""); db.evs[k]=e;save();renderCal();};
                 g.appendChild(div);
             }
         }
         function changeM(d){cM+=d; if(cM>11){cM=0;cY++} if(cM<0){cM=11;cY--} renderCal();}
-        function toggleTheme(){document.body.classList.toggle('dark-theme');}
+        function toggleTheme(){document.body.classList.toggle('dark-theme'); save();}
     </script>
 </body>
 </html>

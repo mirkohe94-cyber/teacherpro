@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>TeacherPro v5.1 - Complete</title>
+    <title>TeacherPro v6.2 - Secure</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -17,90 +17,59 @@
             --border: #dcd9d0;
             --danger: #e74c3c;
             --radius: 16px;
-            --shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
-
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        body { 
-            font-family: -apple-system, system-ui, sans-serif; 
-            background: var(--bg-body); color: var(--text); 
-            margin: 0; display: flex; height: 100vh; overflow: hidden; 
-        }
+        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg-body); color: var(--text); margin: 0; display: flex; height: 100vh; overflow: hidden; }
 
-        /* --- NAVIGATION --- */
-        .sidebar { 
-            width: 260px; background: var(--bg-sidebar); border-right: 1px solid var(--border); 
-            display: flex; flex-direction: column; padding: 25px 15px; flex-shrink: 0; z-index: 10;
-        }
-
-        .nav-btn { 
-            padding: 14px; margin-bottom: 8px; border-radius: 12px; cursor: pointer; 
-            font-weight: 600; font-size: 0.95rem; color: var(--text); 
-            display: flex; align-items: center; gap: 12px; transition: 0.2s;
-            border: none; background: transparent; text-align: left; width: 100%;
-        }
+        /* NAV */
+        .sidebar { width: 260px; background: var(--bg-sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 25px 15px; flex-shrink: 0; z-index: 10; }
+        .nav-btn { padding: 14px; margin-bottom: 8px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 0.95rem; color: var(--text); display: flex; align-items: center; gap: 12px; transition: 0.2s; border: none; background: transparent; text-align: left; width: 100%; }
         .nav-btn:hover { background: rgba(255,255,255,0.5); }
         .nav-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(92,122,99,0.3); }
 
         @media (max-width: 820px) {
             body { flex-direction: column; }
-            .sidebar { 
-                width: 100%; height: 75px; flex-direction: row; order: 2; 
-                padding: 5px; border-top: 1px solid var(--border); border-right: none;
-                justify-content: space-around; align-items: center; 
-                background: rgba(244, 241, 234, 0.95); backdrop-filter: blur(10px);
-                padding-bottom: env(safe-area-inset-bottom);
-            }
+            .sidebar { width: 100%; height: 75px; flex-direction: row; order: 2; padding: 5px; border-top: 1px solid var(--border); border-right: none; justify-content: space-around; align-items: center; background: rgba(244, 241, 234, 0.95); backdrop-filter: blur(10px); padding-bottom: env(safe-area-inset-bottom); }
             .nav-btn { flex-direction: column; font-size: 0.7rem; gap: 4px; padding: 8px; margin: 0; justify-content: center; height: 100%; flex: 1; border-radius: 8px; }
             .app-title { display: none; }
             .main { order: 1; height: calc(100vh - 75px); }
         }
 
-        /* --- CONTENT --- */
         .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
         .view-section { display: none; width: 100%; height: 100%; overflow-y: auto; padding: 25px; -webkit-overflow-scrolling: touch; }
-
-        .card { background: var(--card-bg); border-radius: var(--radius); padding: 20px; border: 1px solid var(--border); box-shadow: var(--shadow); margin-bottom: 20px; }
+        .card { background: var(--card-bg); border-radius: var(--radius); padding: 20px; border: 1px solid var(--border); margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         
         h2, h3 { margin-top: 0; color: var(--primary); }
         input, textarea, select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: #faf9f7; font-size: 1rem; margin-bottom: 10px; font-family: inherit; }
-        button { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1rem; transition: transform 0.1s; }
-        button:active { transform: scale(0.98); }
-        button.secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
-        button.danger { background: var(--danger); }
-
-        /* --- KALENDER CSS --- */
-        .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
-        .cal-head-day { text-align: center; font-weight: bold; font-size: 0.8rem; padding-bottom: 5px; color: var(--primary); }
-        .cal-day { min-height: 80px; background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 5px; font-size: 0.8rem; cursor: pointer; display: flex; flex-direction: column; }
-        .cal-day.today { border: 2px solid var(--primary); background: rgba(92,122,99,0.05); }
-        .cal-event { margin-top: 4px; background: #eee; padding: 2px 4px; border-radius: 4px; font-size: 0.7rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
-        /* --- STUNDENPLAN --- */
+        button { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1rem; }
+        
+        /* TABLES */
         table { width: 100%; border-collapse: collapse; }
-        th { background: var(--primary); color: white; padding: 10px; font-size: 0.8rem; }
-        td { border: 1px solid var(--border); padding: 0; }
-        td input { border: none; margin: 0; background: transparent; text-align: center; border-radius: 0; }
+        th { background: var(--primary); color: white; padding: 8px; font-size: 0.8rem; text-align: left; }
+        td { border: 1px solid var(--border); padding: 8px; }
+        td input { border: none; margin: 0; background: transparent; padding: 5px; width: 100%; }
 
-        /* --- SITZPLAN --- */
-        .seat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 15px; }
-        .seat { height: 60px; background: #eee; border: 2px dashed #ccc; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; cursor: pointer; text-align: center; }
-        .seat.occupied { background: white; border: 2px solid var(--primary); color: var(--primary); font-weight: bold; }
+        /* CALENDAR GRID */
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+        .cal-day { min-height: 80px; background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 4px; font-size: 0.8rem; cursor: pointer; }
+        .cal-day.today { border: 2px solid var(--primary); background: rgba(92,122,99,0.1); }
 
-        #auth-layer { position: fixed; inset: 0; background: var(--bg-body); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+        /* LOGIN */
+        #auth-layer { position: fixed; inset: 0; background: var(--bg-body); z-index: 9999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
     </style>
 </head>
 <body>
 
     <div id="auth-layer">
-        <div class="card" style="width: 320px; text-align: center;">
-            <h1 style="color:var(--primary); margin-bottom: 10px;">TeacherPro</h1>
-            <p style="color:#888; margin-bottom: 20px;">v5.1</p>
-            <div id="setup-hint" style="font-size: 0.8rem; color: #e67e22; margin-bottom: 10px;"></div>
-            <input type="password" id="pw-input" placeholder="Passwort eingeben">
-            <button onclick="app.login()">Starten</button>
+        <div class="card" style="width: 320px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+            <h1 style="color:var(--primary); margin-bottom: 5px;">TeacherPro</h1>
+            <p style="color:#888; font-size: 0.9rem; margin-bottom: 20px;">Sicherer Login</p>
+            
+            <input type="text" id="login-user" placeholder="Benutzername" autocomplete="off" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')">
+            <input type="password" id="login-pass" placeholder="Passwort" autocomplete="new-password">
+            
+            <button onclick="app.login()" style="margin-bottom: 15px;">Anmelden</button>
+            <p id="login-msg" style="font-size: 0.75rem; color: #aaa; min-height: 1rem;">Bitte Daten eingeben.</p>
         </div>
     </div>
 
@@ -110,33 +79,29 @@
         <button class="nav-btn" onclick="app.nav('calendar', this)">🗓️ Kalender</button>
         <button class="nav-btn" onclick="app.nav('plan', this)">📅 Stundenplan</button>
         <button class="nav-btn" onclick="app.nav('classes', this)">👥 Klassen</button>
-        <button class="nav-btn" onclick="app.nav('seating', this)">🪑 Sitzplan</button>
-        <button class="nav-btn" onclick="app.nav('tools', this)">🛠️ Werkzeuge</button>
+        <button class="nav-btn" onclick="app.nav('grades', this)">💯 Noten</button>
         <div style="flex:1"></div>
         <button class="nav-btn" onclick="location.reload()" style="color: var(--danger);">🔒 Abmelden</button>
     </nav>
 
     <main class="main">
-        
         <div id="view-dash" class="view-section" style="display: block;">
-            <div class="card" style="background: var(--primary); color: white; border: none;"><h2>Willkommen!</h2><p>Alles bereit für den Unterricht.</p></div>
-            <div class="card">
-                <h3>📝 Notizen</h3>
-                <textarea id="dash-notes" style="height: 120px;" oninput="app.save()" placeholder="Notiz tippen..."></textarea>
+            <div class="card" style="background: var(--primary); color: white; border: none;">
+                <h2>Hallo, <span id="disp-name">...</span>!</h2>
+                <p>Willkommen zurück in deinem Bereich.</p>
             </div>
             <div class="card">
-                <h3>✅ To-Do</h3>
-                <div style="display: flex; gap: 10px; margin-bottom: 15px;"><input id="todo-in" placeholder="Neu..." style="margin:0;"><button onclick="app.addTodo()" style="width: auto;">+</button></div>
-                <div id="todo-list"></div>
+                <h3>📝 Notizen</h3>
+                <textarea id="dash-notes" style="height: 120px;" oninput="app.save()" placeholder="Deine privaten Notizen..."></textarea>
             </div>
         </div>
 
         <div id="view-calendar" class="view-section">
             <div class="card">
-                <div class="cal-header">
-                    <button class="secondary" style="width:auto" onclick="app.changeMonth(-1)">◀</button>
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                    <button style="width:auto" onclick="app.changeMonth(-1)">◀</button>
                     <h3 id="cal-title" style="margin:0"></h3>
-                    <button class="secondary" style="width:auto" onclick="app.changeMonth(1)">▶</button>
+                    <button style="width:auto" onclick="app.changeMonth(1)">▶</button>
                 </div>
                 <div id="cal-grid" class="cal-grid"></div>
             </div>
@@ -144,10 +109,10 @@
 
         <div id="view-plan" class="view-section">
             <div class="card">
-                <h3>Wochenplan</h3>
+                <h3>Stundenplan</h3>
                 <div style="overflow-x: auto;">
                     <table style="min-width: 500px;">
-                        <thead><tr><th style="width:50px">Std</th><th>Mo</th><th>Di</th><th>Mi</th><th>Do</th><th>Fr</th></tr></thead>
+                        <thead><tr><th style="width:40px">Std</th><th>Mo</th><th>Di</th><th>Mi</th><th>Do</th><th>Fr</th></tr></thead>
                         <tbody id="plan-body"></tbody>
                     </table>
                 </div>
@@ -156,118 +121,77 @@
 
         <div id="view-classes" class="view-section">
             <div class="card">
-                <div style="display:flex; justify-content:space-between; margin-bottom:15px;"><h3>Klassen</h3><button onclick="app.addClass()" style="width:auto;">+ Neu</button></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:15px;"><h3>Klassenliste</h3><button onclick="app.addClass()" style="width:auto;">+ Neu</button></div>
                 <div id="class-list-container"></div>
             </div>
         </div>
 
-        <div id="view-seating" class="view-section">
+        <div id="view-grades" class="view-section">
             <div class="card">
-                <h3>Sitzplan</h3>
-                <select id="seat-class-sel" onchange="app.renderSeats()"><option value="">Klasse wählen...</option></select>
-                <div id="seat-grid" class="seat-grid"></div>
+                <h3>Notenbuch</h3>
+                <p style="font-size:0.9rem; color:#888; margin-bottom:10px;">Bitte Klasse wählen:</p>
+                <select id="grade-class-sel" onchange="app.renderGrades()">
+                    <option value="">...</option>
+                </select>
+                <div id="grades-container" style="overflow-x: auto;"></div>
             </div>
         </div>
-
-        <div id="view-tools" class="view-section">
-            <div class="card">
-                <h3>🎲 Zufall</h3>
-                <select id="rnd-class-sel"><option value="">Klasse wählen...</option></select>
-                <div id="rnd-result" style="font-size: 2rem; text-align: center; padding: 20px; color: var(--primary); font-weight: bold;">?</div>
-                <button onclick="app.pickRandom()">Wählen</button>
-            </div>
-            <div class="card" style="text-align: center;">
-                <h3>⏱️ Timer</h3>
-                <div id="timer-display" style="font-size: 4rem; font-weight: bold; margin: 10px 0;">25:00</div>
-                <button onclick="app.startTimer(25)">25m Start</button>
-                <button class="danger" onclick="app.stopTimer()" style="margin-top:10px">Stop</button>
-            </div>
-        </div>
-
     </main>
 
     <script>
         const app = {
-            data: { password: '1234', notes: '', todos: [], schedule: {}, classes: [], events: {} },
+            currentUser: null,
+            data: { password: '', notes: '', schedule: {}, classes: [], events: {} },
             curDate: new Date(),
 
-            init: function() {
-                const stored = localStorage.getItem('tp_v5_1_final');
-                if (stored) this.data = JSON.parse(stored);
-                else document.getElementById('setup-hint').innerText = "Standard-Passwort: 1234";
-                this.renderSchedule();
-                this.renderCalendar();
-            },
             login: function() {
-                if (document.getElementById('pw-input').value === this.data.password) {
-                    document.getElementById('auth-layer').style.display = 'none';
-                    this.loadDashboard();
-                } else alert("Falsch!");
+                const user = document.getElementById('login-user').value.trim();
+                const pass = document.getElementById('login-pass').value;
+                const msg = document.getElementById('login-msg');
+
+                if (!user || !pass) { msg.style.color='red'; msg.innerText="Bitte Name und Passwort eingeben."; return; }
+
+                const key = 'tp_sec_v6_2_' + user.toLowerCase();
+                const stored = localStorage.getItem(key);
+
+                if (stored) {
+                    // Existierender Nutzer
+                    const parsed = JSON.parse(stored);
+                    if (pass === parsed.password) {
+                        this.currentUser = user; this.data = parsed; this.start();
+                    } else {
+                        msg.style.color='red'; msg.innerText="Falsches Passwort!";
+                    }
+                } else {
+                    // Neuer Nutzer
+                    if (confirm(`Neuen Benutzer "${user}" mit diesem Passwort anlegen?`)) {
+                        this.currentUser = user; this.data.password = pass; this.save(); this.start();
+                    }
+                }
             },
+
+            start: function() {
+                document.getElementById('auth-layer').style.display = 'none';
+                document.getElementById('disp-name').innerText = this.currentUser;
+                document.getElementById('dash-notes').value = this.data.notes || '';
+                this.renderSchedule(); this.renderClasses(); this.renderCalendar(); this.updateGradeSelect();
+            },
+
             save: function() {
+                if (!this.currentUser) return;
                 this.data.notes = document.getElementById('dash-notes').value;
-                localStorage.setItem('tp_v5_1_final', JSON.stringify(this.data));
+                localStorage.setItem('tp_sec_v6_2_' + this.currentUser.toLowerCase(), JSON.stringify(this.data));
             },
+
             nav: function(id, btn) {
                 document.querySelectorAll('.view-section').forEach(el => el.style.display = 'none');
                 document.getElementById('view-' + id).style.display = 'block';
                 document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
                 btn.classList.add('active');
-                if(id === 'classes') this.renderClasses();
-                if(id === 'seating' || id === 'tools') this.updateClassSelects();
-                if(id === 'calendar') this.renderCalendar();
+                if(id === 'grades') this.updateGradeSelect();
             },
 
-            // --- DASHBOARD ---
-            loadDashboard: function() {
-                document.getElementById('dash-notes').value = this.data.notes || '';
-                this.renderTodos();
-            },
-            addTodo: function() {
-                const val = document.getElementById('todo-in').value;
-                if(val) { this.data.todos.push(val); document.getElementById('todo-in').value=''; this.save(); this.renderTodos(); }
-            },
-            renderTodos: function() {
-                const list = document.getElementById('todo-list'); list.innerHTML = '';
-                this.data.todos.forEach((t, i) => list.innerHTML += `<div style="padding:10px; border-bottom:1px solid #eee; display:flex; justify-content:space-between;"><span>${t}</span><span onclick="app.data.todos.splice(${i},1); app.save(); app.renderTodos();" style="color:red; cursor:pointer;">✕</span></div>`);
-            },
-
-            // --- KALENDER ---
-            changeMonth: function(dir) {
-                this.curDate.setMonth(this.curDate.getMonth() + dir);
-                this.renderCalendar();
-            },
-            renderCalendar: function() {
-                const grid = document.getElementById('cal-grid'); grid.innerHTML = '';
-                const m = this.curDate.getMonth(), y = this.curDate.getFullYear();
-                const months = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
-                document.getElementById('cal-title').innerText = `${months[m]} ${y}`;
-                
-                ['Mo','Di','Mi','Do','Fr','Sa','So'].forEach(d => grid.innerHTML += `<div class="cal-head-day">${d}</div>`);
-                
-                const firstDay = new Date(y, m, 1).getDay(); // 0=Sun, 1=Mon
-                const daysInMonth = new Date(y, m+1, 0).getDate();
-                const offset = firstDay === 0 ? 6 : firstDay - 1;
-
-                for(let i=0; i<offset; i++) grid.innerHTML += `<div></div>`;
-
-                for(let d=1; d<=daysInMonth; d++) {
-                    const k = `${y}-${m}-${d}`;
-                    const isToday = new Date().getDate() === d && new Date().getMonth() === m && new Date().getFullYear() === y;
-                    const ev = this.data.events[k] ? `<div class="cal-event">${this.data.events[k]}</div>` : '';
-                    
-                    const div = document.createElement('div');
-                    div.className = `cal-day ${isToday ? 'today' : ''}`;
-                    div.innerHTML = `<b>${d}</b>${ev}`;
-                    div.onclick = () => {
-                        const txt = prompt("Termin:", this.data.events[k] || "");
-                        if(txt !== null) { this.data.events[k] = txt; this.save(); this.renderCalendar(); }
-                    };
-                    grid.appendChild(div);
-                }
-            },
-
-            // --- SCHEDULE ---
+            // FEATURES
             renderSchedule: function() {
                 const b = document.getElementById('plan-body'); b.innerHTML = '';
                 for(let i=1; i<=8; i++) {
@@ -276,57 +200,79 @@
                     b.innerHTML += r + `</tr>`;
                 }
             },
-
-            // --- CLASSES ---
             addClass: function() {
-                const n = prompt("Name:"); if(n) { this.data.classes.push({name:n, students:[], seats:new Array(16).fill(null)}); this.save(); this.renderClasses(); }
+                const n = prompt("Klassenname:"); 
+                if(n) { this.data.classes.push({name: n, students: []}); this.save(); this.renderClasses(); }
             },
             renderClasses: function() {
-                const c = document.getElementById('class-list-container'); c.innerHTML = '';
+                const c = document.getElementById('class-list-container'); 
+                c.innerHTML = this.data.classes.length ? '' : '<p style="color:#888;">Noch keine Klassen.</p>';
                 this.data.classes.forEach((cl, i) => {
-                    c.innerHTML += `<div style="background:#f9f9f9; padding:15px; border-radius:10px; margin-bottom:10px; border:1px solid #eee;">
-                        <b>${cl.name}</b> (${cl.students.length} S.) <button class="danger" style="width:auto; padding:5px;" onclick="if(confirm('Löschen?')){app.data.classes.splice(${i},1);app.save();app.renderClasses()}">Del</button>
-                        <div style="margin-top:5px; font-size:0.85rem; color:#666">${cl.students.join(', ')}</div>
-                        <button class="secondary" style="margin-top:5px; padding:5px;" onclick="const s=prompt('Schüler:');if(s){app.data.classes[${i}].students.push(s);app.save();app.renderClasses()}">+ Schüler</button>
+                    c.innerHTML += `
+                    <div style="background:#f9f9f9; padding:15px; border-radius:10px; margin-bottom:10px; border:1px solid #eee;">
+                        <div style="display:flex; justify-content:space-between; font-weight:bold;">
+                            ${cl.name} 
+                            <button style="background:none; color:red; width:auto; padding:0;" onclick="app.delClass(${i})">Löschen</button>
+                        </div>
+                        <div style="margin-top:10px; font-size:0.9rem; color:#555;">
+                            ${cl.students.map(s => s.name).join(', ') || 'Keine Schüler'}
+                        </div>
+                        <button style="background:transparent; border:1px solid #ccc; color:#333; margin-top:10px; padding:5px 10px; font-size:0.8rem;" onclick="app.addStudent(${i})">+ Schüler hinzufügen</button>
                     </div>`;
                 });
             },
-
-            // --- SEATING & TOOLS ---
-            updateClassSelects: function() {
-                const s1=document.getElementById('seat-class-sel'), s2=document.getElementById('rnd-class-sel');
-                s1.innerHTML=s2.innerHTML='<option value="">Wählen...</option>';
-                this.data.classes.forEach((c,i) => { s1.innerHTML+=`<option value="${i}">${c.name}</option>`; s2.innerHTML+=`<option value="${i}">${c.name}</option>`; });
+            delClass: function(i) { if(confirm("Klasse wirklich löschen?")) { this.data.classes.splice(i,1); this.save(); this.renderClasses(); } },
+            addStudent: function(i) {
+                const s = prompt("Name des Schülers:");
+                if(s) { this.data.classes[i].students.push({name: s, grades: '', note: ''}); this.save(); this.renderClasses(); }
             },
-            renderSeats: function() {
-                const idx = document.getElementById('seat-class-sel').value;
-                const g = document.getElementById('seat-grid'); g.innerHTML = '';
-                if(idx==="") return;
+            updateGradeSelect: function() {
+                const s = document.getElementById('grade-class-sel');
+                s.innerHTML = '<option value="">Bitte Klasse wählen...</option>';
+                this.data.classes.forEach((c, i) => s.innerHTML += `<option value="${i}">${c.name}</option>`);
+            },
+            renderGrades: function() {
+                const idx = document.getElementById('grade-class-sel').value;
+                const div = document.getElementById('grades-container');
+                div.innerHTML = '';
+                if(idx === '') return;
                 const cls = this.data.classes[idx];
-                if(!cls.seats || cls.seats.length<16) cls.seats = new Array(16).fill(null);
-                cls.seats.forEach((s, i) => {
-                    const d = document.createElement('div'); d.className=`seat ${s?'occupied':''}`; d.innerText=s||'Frei';
-                    d.onclick=()=>{const n=prompt("Name:",s||""); cls.seats[i]=n; this.save(); this.renderSeats();};
-                    g.appendChild(d);
+                if(cls.students.length === 0) { div.innerHTML = '<p>Keine Schüler.</p>'; return; }
+
+                let html = '<table style="min-width:500px"><thead><tr><th>Name</th><th>Noten</th><th>Bemerkung</th></tr></thead><tbody>';
+                cls.students.forEach((stud, sIdx) => {
+                    html += `<tr>
+                        <td style="font-weight:bold;">${stud.name}</td>
+                        <td><input value="${stud.grades || ''}" placeholder="Noten..." oninput="app.updateGrade(${idx}, ${sIdx}, 'grades', this.value)"></td>
+                        <td><input value="${stud.note || ''}" placeholder="Info..." oninput="app.updateGrade(${idx}, ${sIdx}, 'note', this.value)"></td>
+                    </tr>`;
                 });
+                html += '</tbody></table>';
+                div.innerHTML = html;
             },
-            pickRandom: function() {
-                const idx = document.getElementById('rnd-class-sel').value;
-                if(idx==="" || !this.data.classes[idx].students.length) return;
-                const s = this.data.classes[idx].students;
-                let c=0; const int = setInterval(() => {
-                    document.getElementById('rnd-result').innerText = s[Math.floor(Math.random()*s.length)];
-                    if(++c > 15) clearInterval(int);
-                }, 80);
+            updateGrade: function(cIdx, sIdx, field, val) {
+                this.data.classes[cIdx].students[sIdx][field] = val;
+                this.save();
             },
-            timerInt: null,
-            startTimer: function(m) {
-                clearInterval(this.timerInt); let s = m*60;
-                this.timerInt = setInterval(() => { s--; document.getElementById('timer-display').innerText=`${Math.floor(s/60)}:${s%60<10?'0':''}${s%60}`; if(s<=0){clearInterval(this.timerInt);alert("Zeit um!");} }, 1000);
-            },
-            stopTimer: function() { clearInterval(this.timerInt); document.getElementById('timer-display').innerText="00:00"; }
+            changeMonth: function(d) { this.curDate.setMonth(this.curDate.getMonth()+d); this.renderCalendar(); },
+            renderCalendar: function() {
+                const g = document.getElementById('cal-grid'); g.innerHTML = '';
+                const m = this.curDate.getMonth(), y = this.curDate.getFullYear();
+                const months = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
+                document.getElementById('cal-title').innerText = `${months[m]} ${y}`;
+                ['Mo','Di','Mi','Do','Fr','Sa','So'].forEach(d=>g.innerHTML+=`<div style="text-align:center;font-size:0.7rem;color:#888;">${d}</div>`);
+                const first = new Date(y, m, 1).getDay(), days = new Date(y, m+1, 0).getDate(), off = first===0?6:first-1;
+                for(let i=0; i<off; i++) g.innerHTML+=`<div></div>`;
+                for(let d=1; d<=days; d++) {
+                    const k = `${y}-${m}-${d}`;
+                    const ev = this.data.events[k] ? `<div style="background:var(--primary);height:5px;width:5px;border-radius:50%;margin:2px auto;"></div>` : '';
+                    const div = document.createElement('div'); div.className='cal-day'; div.innerHTML=`<b>${d}</b>${ev}`;
+                    if(new Date().getDate()===d && new Date().getMonth()===m) div.classList.add('today');
+                    div.onclick=()=>{const t=prompt("Termin:",this.data.events[k]||""); if(t!==null){this.data.events[k]=t;this.save();this.renderCalendar();}};
+                    g.appendChild(div);
+                }
+            }
         };
-        window.onload = function() { app.init(); };
     </script>
 </body>
 </html>

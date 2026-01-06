@@ -2,235 +2,129 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>TeacherPro v4.7 Master Edition</title>
+    <title>TeacherPro v4.8 - Fixed & Complete</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
     <style>
-        :root {
-            --primary: #5c7a63;
-            --bg: #fdfcf8;
-            --card: #ffffff;
-            --text: #2c3e50;
-            --border: rgba(92, 122, 99, 0.2);
-            --radius: 18px;
-        }
-
+        :root { --p: #5c7a63; --bg: #fdfcf8; --c: #fff; --b: rgba(0,0,0,0.1); }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        
+        /* NAVIGATION ENGINE CSS */
+        .view { display: none; width: 100%; height: 100%; overflow-y: auto; padding: 20px; }
+        .active-view { display: block !important; }
 
-        /* WICHTIG: Erzwungenes Verstecken für inaktive Reiter */
-        .page-view { display: none; width: 100%; height: 100%; }
+        .sidebar { width: 250px; background: #f4f1ea; border-right: 1px solid var(--b); display: flex; flex-direction: column; padding: 20px; }
+        .nav-btn { padding: 15px; margin-bottom: 5px; border-radius: 12px; cursor: pointer; font-weight: bold; background: transparent; border: none; text-align: left; width: 100%; display: flex; gap: 10px; }
+        .nav-btn.active { background: var(--p); color: white; }
 
-        /* Navigation */
-        .sidebar { width: 260px; background: #f4f1ea; border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 25px 15px; flex-shrink: 0; }
-        .nav-item { padding: 14px; margin-bottom: 6px; border-radius: 14px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 12px; transition: 0.3s; }
-        .nav-item.active { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(92,122,99,0.3); }
-
-        @media (max-width: 850px) {
+        @media (max-width: 800px) {
             body { flex-direction: column; }
-            .sidebar { width: 100%; height: 80px; flex-direction: row; order: 2; padding: 0 5px; border-top: 1px solid var(--border); justify-content: space-around; align-items: center; }
-            .nav-item { flex-direction: column; font-size: 0.7rem; gap: 4px; padding: 10px; }
-            .main { order: 1; height: calc(100vh - 80px); }
+            .sidebar { width: 100%; height: 70px; flex-direction: row; order: 2; padding: 5px; border-top: 1px solid var(--b); justify-content: space-around; }
+            .nav-btn { flex-direction: column; font-size: 0.65rem; align-items: center; padding: 5px; }
+            .main { order: 1; height: calc(100vh - 70px); }
         }
 
-        .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-        .header { height: 80px; padding: 0 30px; display: flex; align-items: center; border-bottom: 1px solid var(--border); background: #fff; justify-content: space-between; }
-        .content { flex: 1; padding: 25px; overflow-y: auto; }
-
-        .card { background: var(--card); border-radius: var(--radius); padding: 25px; border: 1px solid var(--border); box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        .main { flex: 1; display: flex; flex-direction: column; }
+        .card { background: var(--c); border-radius: 15px; padding: 20px; border: 1px solid var(--b); margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         
-        /* STUNDENPLAN TABELLE */
-        .timetable { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        .timetable th, .timetable td { border: 1px solid var(--border); padding: 10px; text-align: center; font-size: 0.85rem; }
-        .timetable th { background: var(--primary); color: white; }
-        .timetable td input { border: none; width: 100%; text-align: center; background: transparent; font-size: 0.85rem; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid var(--b); padding: 8px; text-align: center; }
+        th { background: var(--p); color: white; font-size: 0.8rem; }
+        input { width: 100%; border: none; background: transparent; text-align: center; }
 
-        /* AUTH */
-        #auth-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 10000; display: flex; align-items: center; justify-content: center; }
-        .auth-card { background: #fff; padding: 40px; border-radius: 25px; width: 90%; max-width: 380px; text-align: center; box-shadow: 0 15px 40px rgba(0,0,0,0.1); border: 1px solid var(--border); }
-        
-        input, textarea, select { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 15px; font-size: 1rem; }
-        button { background: var(--primary); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: bold; cursor: pointer; width: 100%; transition: 0.2s; }
-        button:active { transform: scale(0.98); }
+        #auth { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
 
-    <div id="auth-overlay">
-        <div class="auth-card">
-            <h1 style="color:var(--primary); margin: 0 0 10px 0;">TeacherPro</h1>
-            <p style="color:#7f8c8d; margin-bottom: 30px;">Digitaler Lehrerschreibtisch</p>
-            <div id="reg-box"><input type="text" id="reg-name" placeholder="Dein Name"></div>
-            <input type="password" id="auth-pass" placeholder="Master-Passwort">
-            <button onclick="handleAuth()">Anmelden 🌿</button>
+<div id="auth">
+    <div style="background:white; padding:30px; border-radius:20px; text-align:center; width:300px; border:1px solid var(--b)">
+        <h2 style="color:var(--p)">TeacherPro Login</h2>
+        <div id="setup-msg"></div>
+        <input type="password" id="pw" placeholder="Passwort" style="padding:10px; width:100%; margin-bottom:10px; border-radius:8px; border:1px solid var(--b)">
+        <button onclick="login()" style="width:100%; padding:10px; background:var(--p); color:white; border:none; border-radius:8px; font-weight:bold">Starten</button>
+    </div>
+</div>
+
+<nav class="sidebar">
+    <div style="font-weight:900; color:var(--p); margin-bottom:20px" class="hidden-mobile">TeacherPro v4.8</div>
+    <button class="nav-btn active" onclick="show('dash', this)"><span>🏠 Übersicht</span></button>
+    <button class="nav-btn" onclick="show('plan', this)"><span>📅 Stundenplan</span></button>
+    <button class="nav-btn" onclick="show('cls', this)"><span>👥 Klassen</span></button>
+    <button class="nav-btn" onclick="show('tmr', this)"><span>⏱️ Timer</span></button>
+</nav>
+
+<main class="main">
+    <div id="dash" class="view active-view">
+        <div class="card" style="background:var(--p); color:white"><h2>Dashboard</h2><p id="welcome"></p></div>
+        <div class="card"><h3>Notizen</h3><textarea id="notes" style="width:100%; height:150px; border:1px solid var(--b)" oninput="save()"></textarea></div>
+    </div>
+
+    <div id="plan" class="view">
+        <div class="card">
+            <h3>Wochenplan</h3>
+            <table>
+                <tr><th>Std</th><th>Mo</th><th>Di</th><th>Mi</th><th>Do</th><th>Fr</th></tr>
+                <tbody id="plan-body"></tbody>
+            </table>
         </div>
     </div>
 
-    <nav class="sidebar">
-        <div style="font-weight: 900; color: var(--primary); font-size: 1.5rem; margin-bottom: 30px; padding-left: 10px;">TP v4.7</div>
-        <div class="nav-item active" onclick="nav('dashboard', this)"><span>Übersicht</span></div>
-        <div class="nav-item" onclick="nav('schedule', this)"><span>Stundenplan</span></div>
-        <div class="nav-item" onclick="nav('classes', this)"><span>Klassen</span></div>
-        <div class="nav-item" onclick="nav('tools', this)"><span>Werkzeuge</span></div>
-        <div style="flex:1"></div>
-        <div class="nav-item" onclick="location.reload()" style="color:#e74c3c"><span>Abmelden</span></div>
-    </nav>
-
-    <main class="main">
-        <header class="header"><h2 id="view-title" style="margin:0;">Übersicht</h2><div id="u-badge" style="width:45px; height:45px; background:var(--primary); color:white; border-radius:15px; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:1.2rem;">?</div></header>
-        <div class="content">
-            
-            <div id="view-dashboard" class="page-view" style="display: block;">
-                <div class="card" style="background: linear-gradient(135deg, var(--primary), #4a6350); color: white; border: none;">
-                    <h2 style="margin:0">Hallo, <span id="u-name-display">...</span>!</h2>
-                    <p style="opacity: 0.9;">Alle Daten werden sicher im Browser gespeichert.</p>
-                </div>
-                <div class="card">
-                    <h3>✍️ Tagesnotizen</h3>
-                    <textarea id="note-field" style="height: 150px; border: none; background: #faf9f7;" oninput="save()" placeholder="Was steht heute an?"></textarea>
-                </div>
-            </div>
-
-            <div id="view-schedule" class="page-view">
-                <div class="card">
-                    <h3>📅 Wochenplan</h3>
-                    <div style="overflow-x: auto;">
-                        <table class="timetable">
-                            <tr><th>Std</th><th>Mo</th><th>Di</th><th>Mi</th><th>Do</th><th>Fr</th></tr>
-                            <tbody id="timetable-body"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div id="view-classes" class="page-view">
-                <div class="card">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                        <h3>Klassenliste</h3>
-                        <button onclick="addClass()" style="width:auto; padding:8px 15px;">+ Neu</button>
-                    </div>
-                    <div id="class-list"></div>
-                </div>
-            </div>
-
-            <div id="view-tools" class="page-view">
-                <div class="card" style="text-align:center;">
-                    <h3>⏱️ Fokus-Timer</h3>
-                    <h1 id="timer-display" style="font-size:4rem; margin:20px 0;">25:00</h1>
-                    <button onclick="startT(25)">Fokus starten (25m)</button>
-                </div>
-            </div>
-
+    <div id="cls" class="view">
+        <div class="card">
+            <button onclick="addCls()">+ Neue Klasse</button>
+            <div id="cls-list" style="margin-top:15px"></div>
         </div>
-    </main>
+    </div>
 
-    <script>
-        let db = { user: '', pass: '', notes: '', classes: [], schedule: {} };
+    <div id="tmr" class="view">
+        <div class="card" style="text-align:center">
+            <h1 id="tdisp" style="font-size:4rem">25:00</h1>
+            <button onclick="startT()">Timer starten</button>
+        </div>
+    </div>
+</main>
 
-        window.onload = () => {
-            const saved = localStorage.getItem('tp_master_v47');
-            if(saved) {
-                document.getElementById('reg-box').style.display = 'none';
-            }
-            buildSchedule();
-        };
+<script>
+    let db = { name: 'Lehrkraft', pw: '1234', notes: '', classes: [], schedule: {} };
 
-        function handleAuth() {
-            const saved = localStorage.getItem('tp_master_v47');
-            const pass = document.getElementById('auth-pass').value;
-            if(!saved) {
-                const name = document.getElementById('reg-name').value;
-                if(!name || !pass) return alert("Bitte Name und Passwort festlegen!");
-                db.user = name; db.pass = pass;
-                save(); location.reload();
-            } else {
-                db = JSON.parse(saved);
-                if(pass === db.pass) {
-                    document.getElementById('auth-overlay').style.display = 'none';
-                    document.getElementById('u-name-display').innerText = db.user;
-                    document.getElementById('u-badge').innerText = db.user[0].toUpperCase();
-                    document.getElementById('note-field').value = db.notes;
-                    renderC();
-                    loadSchedule();
-                } else alert("Passwort nicht korrekt!");
-            }
+    window.onload = () => {
+        const s = localStorage.getItem('tp_v48_final');
+        if(s) db = JSON.parse(s);
+        else document.getElementById('setup-msg').innerHTML = "<p small>Erster Start: Passwort ist '1234'</p>";
+        
+        // Plan bauen
+        const b = document.getElementById('plan-body');
+        for(let i=1; i<=6; i++) {
+            let r = `<tr><td>${i}</td>`;
+            for(let j=1; j<=5; j++) r += `<td><input id="p-${i}-${j}" oninput="saveP()" value="${db.schedule[i+'-'+j] || ''}"></td>`;
+            b.innerHTML += r + `</tr>`;
         }
+    };
 
-        // NAVIGATION LOGIK (ERZWUNGEN)
-        function nav(id, el) {
-            const views = document.getElementsByClassName('page-view');
-            for (let i = 0; i < views.length; i++) {
-                views[i].style.setProperty('display', 'none', 'important');
-            }
-            const target = document.getElementById('view-' + id);
-            target.style.setProperty('display', 'block', 'important');
+    function login() {
+        const p = document.getElementById('pw').value;
+        if(p === db.pw) {
+            document.getElementById('auth').style.display = 'none';
+            document.getElementById('welcome').innerText = "Willkommen zurück!";
+            document.getElementById('notes').value = db.notes;
+            renderC();
+        } else alert("Falsch!");
+    }
 
-            const items = document.getElementsByClassName('nav-item');
-            for (let i = 0; i < items.length; i++) {
-                items[i].classList.remove('active');
-            }
-            el.classList.add('active');
-            document.getElementById('view-title').innerText = el.innerText;
-        }
+    function show(id, btn) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
+        document.getElementById(id).classList.add('active-view');
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
 
-        function save() {
-            db.notes = document.getElementById('note-field').value;
-            localStorage.setItem('tp_master_v47', JSON.stringify(db));
-        }
-
-        // STUNDENPLAN LOGIK
-        function buildSchedule() {
-            const body = document.getElementById('timetable-body');
-            for(let i=1; i<=6; i++) {
-                let row = `<tr><td>${i}</td>`;
-                for(let j=0; j<5; j++) {
-                    row += `<td><input id="cell-${i}-${j}" oninput="saveSchedule()" placeholder="..."></td>`;
-                }
-                row += `</tr>`;
-                body.innerHTML += row;
-            }
-        }
-
-        function saveSchedule() {
-            for(let i=1; i<=6; i++) {
-                for(let j=0; j<5; j++) {
-                    db.schedule[`${i}-${j}`] = document.getElementById(`cell-${i}-${j}`).value;
-                }
-            }
-            save();
-        }
-
-        function loadSchedule() {
-            for(let i=1; i<=6; i++) {
-                for(let j=0; j<5; j++) {
-                    const val = db.schedule[`${i}-${j}`];
-                    if(val) document.getElementById(`cell-${i}-${j}`).value = val;
-                }
-            }
-        }
-
-        function addClass() {
-            const n = prompt("Klassenname:");
-            if(n) { db.classes.push(n); save(); renderC(); }
-        }
-
-        function renderC() {
-            const l = document.getElementById('class-list');
-            l.innerHTML = db.classes.length ? '' : '<p>Noch keine Klassen.</p>';
-            db.classes.forEach(c => l.innerHTML += `<div class='card' style='padding:15px; margin-bottom:10px;'><b>Klasse ${c}</b></div>`);
-        }
-
-        function startT(m) {
-            let s = m * 60;
-            const t = setInterval(() => {
-                s--;
-                let min = Math.floor(s/60), sec = s%60;
-                document.getElementById('timer-display').innerText = `${min}:${sec<10?'0':''}${sec}`;
-                if(s<=0) { clearInterval(t); alert("Zeit um!"); }
-            }, 1000);
-        }
-    </script>
+    function save() { db.notes = document.getElementById('notes').value; localStorage.setItem('tp_v48_final', JSON.stringify(db)); }
+    function saveP() { for(let i=1;i<=6;i++){for(let j=1;j<=5;j++){db.schedule[i+'-'+j]=document.getElementById('p-'+i+'-'+j).value;}} save(); }
+    function addCls() { const n=prompt("Klasse:"); if(n){db.classes.push(n);save();renderC();}}
+    function renderC() { const l=document.getElementById('cls-list'); l.innerHTML=''; db.classes.forEach(c=>l.innerHTML+=`<div class="card">${c}</div>`); }
+    function startT() { let s=1500; setInterval(()=>{s--; document.getElementById('tdisp').innerText=Math.floor(s/60)+":"+(s%60<10?'0':'')+(s%60);},1000); }
+</script>
 </body>
 </html>
